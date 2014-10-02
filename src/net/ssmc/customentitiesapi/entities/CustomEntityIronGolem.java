@@ -22,6 +22,8 @@ public class CustomEntityIronGolem extends CustomEntityGolem{
 		this();
 		a();
 		spawnEntity(location);
+		removeGoalSelectorPathfinderGoalMeleeAttack();
+		newGoalSelectorPathfinderGoalMeleeAttackDefault();
 	}
 
 	public CustomEntityIronGolem(Entity e){
@@ -195,27 +197,27 @@ public class CustomEntityIronGolem extends CustomEntityGolem{
 		}
 	}
 	
-	public void newGoalSelectorPathFinderGoalMeleeAttackDefault(){
+	public void newGoalSelectorPathfinderGoalMeleeAttackDefault(){
 		newGoalSelectorPathfinderGoalMeleeAttack(1.0D, true);
 	}
 	
-	public void newGoalSelectorPathFinderMoveTowardsTargetDefault(){
+	public void newGoalSelectorPathfinderMoveTowardsTargetDefault(){
 		newGoalSelectorPathfinderGoalMoveTowardsTarget(0.9D, 32.0F);
 	}
 	
-	public void newGoalSelectorPathFinderMoveThroughVillagerDefault(){
+	public void newGoalSelectorPathfinderMoveThroughVillagerDefault(){
 		newGoalSelectorPathfinderGoalMoveThroughVillage(0.6D, true);
 	}
 	
-	public void newGoalSelectorPathFinderMoveThroughRestrictionDefault(){
+	public void newGoalSelectorPathfinderMoveThroughRestrictionDefault(){
 		newGoalSelectorPathfinderGoalMoveTowardsRestriction(1.0D);
 	}
 	
-	public void newGoalSelectorPathFinderRandomStrollDefault(){
+	public void newGoalSelectorPathfinderRandomStrollDefault(){
 		newGoalSelectorPathfinderGoalRandomStroll(0.6D);
 	}
 	
-	public void newGoalSelectorPathFinderLookAtPlayerDefault(){
+	public void newGoalSelectorPathfinderLookAtPlayerDefault(){
 		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYPLAYER, 6.0F);
 	}
 
