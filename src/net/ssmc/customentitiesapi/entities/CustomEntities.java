@@ -96,9 +96,10 @@ public class CustomEntities {
 
 	public static void createClasses(){
 		try {
-			Runtime.getRuntime().gc();
-			new CustomEntityZombie();
 			new CustomEntityIronGolem();
+			new CustomEntitySheep();
+			new CustomEntityVillager();
+			new CustomEntityZombie();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
