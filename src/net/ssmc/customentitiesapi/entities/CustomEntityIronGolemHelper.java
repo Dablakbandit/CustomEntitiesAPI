@@ -53,7 +53,6 @@ public class CustomEntityIronGolemHelper extends CustomEntityGolemHelper{
 			newGoalSelectorPathfinderGoalNearestAttackableTarget(irongolem, "EntityInsentient", 0, false, true, cons.newInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
-		
+		}*/		
 	}
 }

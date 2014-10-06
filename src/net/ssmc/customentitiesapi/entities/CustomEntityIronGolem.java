@@ -31,6 +31,12 @@ public class CustomEntityIronGolem extends CustomEntityGolem{
 		a();
 		entity = NMSUtils.getHandle(e);
 	}
+	
+	public CustomEntityIronGolem(Object o){
+		this();
+		a();
+		entity = o;
+	}
 
 	public static Class<?> getCustomEntityIronGolemClass(){
 		try {

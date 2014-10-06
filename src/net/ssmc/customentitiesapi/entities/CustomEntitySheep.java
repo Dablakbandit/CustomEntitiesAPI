@@ -32,6 +32,12 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 		entity = NMSUtils.getHandle(e);
 	}
 	
+	public CustomEntitySheep(Object o){
+		this();
+		a();
+		entity = o;
+	}
+	
 	public static Class<?> getCustomEntitySheepClass(){
 		try {
 			return Class.forName("temp.CustomEntitySheep");

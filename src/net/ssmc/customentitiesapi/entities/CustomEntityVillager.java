@@ -33,6 +33,12 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 
 		}
 	}
+	
+	public CustomEntityVillager(Object o){
+		this();
+		a();
+		entity = o;
+	}
 
 	public static Class<?> getCustomEntityVillagerClass(){
 		try {
