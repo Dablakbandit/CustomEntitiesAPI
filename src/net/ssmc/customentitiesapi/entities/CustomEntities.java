@@ -1,5 +1,9 @@
 package net.ssmc.customentitiesapi.entities;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
 import ja.ClassPool;
 import net.ssmc.customentitiesapi.NMSUtils;
 
@@ -17,13 +21,17 @@ public class CustomEntities {
 	public static boolean isCustomEntitySheep(Entity e){
 		return NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntitySheep");
 	}
+	
+	public static boolean isNormalEntitySheep(Entity e){
+		return NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() + "EntitySheep");
+	}
 
 	public static CustomEntitySheep getCustomEntitySheep(Entity e){
-		if(NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntitySheep")){
+		if(isCustomEntitySheep(e)){
 			return new CustomEntitySheep(e);
-		}else if(NMSUtils.getHandle(e).getClass().getSimpleName().equals("EntitySheep")){
+		}else if(isNormalEntitySheep(e)){
 			CustomEntitySheep ces = new CustomEntitySheep(e.getLocation());
-			//TODO edit the new entity to be like the old
+			clone(NMSUtils.getHandle(e), ces.getEntity());
 			e.remove();
 			return ces;
 		}
@@ -41,9 +49,9 @@ public class CustomEntities {
 		System.out.print(NMSUtils.getHandle(e).getClass().getName());
 		if(NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntityZombie")){
 			return new CustomEntityZombie(e);
-		}else if(NMSUtils.getHandle(e).getClass().getSimpleName().equals("EntityZombie")){
+		}else if(NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() +"EntityZombie")){
 			CustomEntityZombie cez = new CustomEntityZombie(e.getLocation());
-			//TODO edit the new entity to be like the old
+			clone(NMSUtils.getHandle(e), cez.getEntity());
 			e.remove();
 			return cez;
 		}
@@ -61,9 +69,9 @@ public class CustomEntities {
 	public static CustomEntityVillager getCustomEntityVillager(Entity e){
 		if(NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntityVillager")){
 			return new CustomEntityVillager(e);
-		}else if(NMSUtils.getHandle(e).getClass().getSimpleName().equals("EntityVillager")){
+		}else if(NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() +"EntityVillager")){
 			CustomEntityVillager cev = new CustomEntityVillager(e.getLocation());
-			//TODO edit the new entity to be like the old
+			clone(NMSUtils.getHandle(e), cev.getEntity());
 			e.remove();
 			return cev;
 		}
@@ -81,9 +89,9 @@ public class CustomEntities {
 	public static CustomEntityIronGolem getCustomEntityIronGolem(Entity e){
 		if(NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntityIronGolem")){
 			return new CustomEntityIronGolem(e);
-		}else if(NMSUtils.getHandle(e).getClass().getSimpleName().equals("EntityIronGolem")){
+		}else if(NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() +"EntityIronGolem")){
 			CustomEntityIronGolem ceig = new CustomEntityIronGolem(e.getLocation());
-			//TODO edit the new entity to be like the old
+			clone(NMSUtils.getHandle(e), ceig.getEntity());
 			e.remove();
 			return ceig;
 		}
@@ -92,6 +100,37 @@ public class CustomEntities {
 
 	public static CustomEntityIronGolem getNewCustomEntityIronGolem(Location location){
 		return new CustomEntityIronGolem(location);
+	}
+	
+	private static void clone(Object oold, Object onew){
+		Map<Class<?>, Map<String, Object>> fields = new HashMap<Class<?>, Map<String, Object>>();
+		Class<?> c = oold.getClass();
+		while(c!=null){
+			Map<String, Object> fs = new HashMap<String, Object>();
+			for(Field f : c.getDeclaredFields()){
+				f.setAccessible(true);
+				if(!f.getName().equals("dead")){
+					try {
+						fs.put(f.getName(), f.get(oold));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			c = c.getSuperclass();
+		}
+		for(Class<?> c1 : fields.keySet()){
+			Map<String, Object> fs =fields.get(c1);
+			for(String f : fs.keySet()){
+				try {
+					Field f1 = c1.getDeclaredField(f);
+					f1.setAccessible(true);
+					f1.set(c1.cast(onew), fs.get(f));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public static void createClasses(){

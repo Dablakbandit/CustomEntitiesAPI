@@ -22,9 +22,6 @@ public class CustomEntitySkeleton extends CustomEntityMonster{
 		this();
 		a();
 		spawnEntity(location);
-		removeGoalSelectorPathfinderGoalMeleeAttack();
-		//TODO
-		//newGoalSelectorPathfinderGoalMeleeAttackDefault();
 	}
 
 	public CustomEntitySkeleton(Entity e){
@@ -85,7 +82,7 @@ public class CustomEntitySkeleton extends CustomEntityMonster{
 				e2.printStackTrace();
 			}
 		}
-		if(customentity!=null)CustomEntitiesAPI.getInstance().registerEntity("EntitySkeleton", 54, customentity);
+		if(customentity!=null)CustomEntitiesAPI.getInstance().registerEntity("EntitySkeleton", 51, customentity);
 	}
 
 	public void a(){
