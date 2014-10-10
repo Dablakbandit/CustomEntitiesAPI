@@ -105,7 +105,7 @@ public abstract class CustomEntityCreature extends CustomEntityInsentient{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalMeleeAttack(EntityLivingName eln, double d, boolean value){
 		try {
 			helper.getMethod("newGoalSelectorPathfinderGoalMeleeAttack", Object.class, String.class, double.class, boolean.class).invoke(null, entity, eln.getName(), d, value);
@@ -170,7 +170,7 @@ public abstract class CustomEntityCreature extends CustomEntityInsentient{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalAvoidPlayer(EntityName en, float f, double d, double d0){
 		try {
 			helper.getMethod("newGoalSelectorPathfinderGoalAvoidPlayer", Object.class, String.class, float.class, double.class, double.class).invoke(null, entity, en.getName(), f, d, d0);
@@ -238,7 +238,8 @@ public abstract class CustomEntityCreature extends CustomEntityInsentient{
 			e.printStackTrace();
 		}
 	}
-
+	//Target selector not goal selector
+	/*
 	public void newGoalSelectorPathfinderGoalHurtByTarget(double d){
 		try {
 			helper.getMethod("newGoalSelectorPathfinderGoalHurtByTarget", Object.class, double.class).invoke(null, entity, d);
@@ -274,6 +275,38 @@ public abstract class CustomEntityCreature extends CustomEntityInsentient{
 	public void removeGoalSelectorPathfinderGoalNearestAttackableTarget(){
 		try {
 			helper.getMethod("removeGoalSelectorPathfinderGoalNearestAttackableTarget", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	 */
+	public void newGoalSelectorPathfinderGoalRestrictSunDefault(){
+		try {
+			helper.getMethod("newGoalSelectorPathfinderGoalRestrictSun", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeGoalSelectorPathfinderGoalRestrictSun(){
+		try {
+			helper.getMethod("removeGoalSelectorPathfinderGoalRestrictSun", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newGoalSelectorPathfinderGoalFleeSun(double d){
+		try {
+			helper.getMethod("newGoalSelectorPathfinderGoalFleeSun", Object.class, double.class).invoke(null, entity, d);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeGoalSelectorPathfinderGoalFleeSun(){
+		try {
+			helper.getMethod("removeGoalSelectorPathfinderGoalFleeSun", Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

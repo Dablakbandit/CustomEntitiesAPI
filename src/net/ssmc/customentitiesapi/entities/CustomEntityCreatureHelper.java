@@ -246,4 +246,44 @@ public class CustomEntityCreatureHelper extends CustomEntityInsentientHelper{
 		removeGoalSelectorPathFinderGoal(creature, "PathfinderGoalMoveTowardsTarget");
 	}
 	
+	public static void newGoalSelectorPathfinderGoalRestrictSun(Object creature){
+		try{
+			Class<?> entitycreature = getNMSClass("EntityCreature");
+			Class<?> pathfindergoal = getNMSClass("PathfinderGoal");
+
+			Object goalselector = getGoalSelector(creature);
+			
+			Class<?> pathfindergoalrestrictsun = getNMSClass("PathfinderGoalRestrictSun");
+			Object o = pathfindergoalrestrictsun.getConstructor(entitycreature).newInstance(entitycreature.cast(creature));
+			
+			goalselector.getClass().getMethod("a", int.class, pathfindergoal).invoke(goalselector, 3, o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void removeGoalSelectorPathfinderGoalRestrictSun(Object creature){
+		removeGoalSelectorPathFinderGoal(creature, "PathfinderGoalRestrictSun");
+	}
+	
+	public static void newGoalSelectorPathfinderGoalFleeSun(Object creature, double d){
+		try{
+			Class<?> entitycreature = getNMSClass("EntityCreature");
+			Class<?> pathfindergoal = getNMSClass("PathfinderGoal");
+
+			Object goalselector = getGoalSelector(creature);
+			
+			Class<?> pathfindergoalfleesun = getNMSClass("PathfinderGoalFleeSun");
+			Object o = pathfindergoalfleesun.getConstructor(entitycreature, double.class).newInstance(entitycreature.cast(creature), d);
+			
+			goalselector.getClass().getMethod("a", int.class, pathfindergoal).invoke(goalselector, 3, o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void removeGoalSelectorPathfinderGoalFleeSun(Object creature){
+		removeGoalSelectorPathFinderGoal(creature, "PathfinderGoalFleeSun");
+	}
+	
 }

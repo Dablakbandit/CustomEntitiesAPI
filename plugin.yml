@@ -1,7 +1,7 @@
 name: CustomEntitiesAPI
 main: net.ssmc.customentitiesapi.CustomEntitiesAPI
 author: Dablakbandit
-version: 1.3
+version: 1.4
 commands:
   customentitiesapi:
     permission: customentitiesapi.test

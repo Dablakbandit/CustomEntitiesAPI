@@ -182,6 +182,14 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 			setAbleToMove();
 		}
 	}
+	
+	public void setGoalSelectorDefaultPathfinderGoals(){
+		try {
+			helper.getMethod("setGoalSelectorDefaultPathfinderGoals", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void newGoalSelectorPathfinderGoalAvoidPlayerDefault(){
 		newGoalSelectorPathfinderGoalAvoidPlayer(EntityName.ENTITYZOMBIE, 8.0F, 0.6D, 0.6D);

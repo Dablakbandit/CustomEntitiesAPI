@@ -1,9 +1,5 @@
 package net.ssmc.customentitiesapi.entities;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
-
 import ja.ClassPool;
 import net.ssmc.customentitiesapi.NMSUtils;
 
@@ -15,40 +11,60 @@ public class CustomEntities {
 	private static ClassPool cp= new ClassPool(true);
 
 	private static void clone(Object oold, Object onew){
-		Map<Class<?>, Map<String, Object>> fields = new HashMap<Class<?>, Map<String, Object>>();
+		
+		try{
+			Class<?> entity = NMSUtils.getNMSClass("Entity");
+			entity.getMethod("a", entity, boolean.class).invoke(entity.cast(onew), entity.cast(oold), true);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//Not working full clone resorted to a basic clone ^
+		/*Map<Class<?>, Map<String, Object>> fields = new HashMap<Class<?>, Map<String, Object>>();
 		Class<?> c = oold.getClass();
-		while(c!=null){
-			Map<String, Object> fs = new HashMap<String, Object>();
+		for(int i = 0; i<6; i++){
+			Map<String, Object> fs1 = new HashMap<String, Object>();
 			for(Field f : c.getDeclaredFields()){
 				f.setAccessible(true);
-				if(!f.getName().equals("dead")){
+				if(!Modifier.isFinal(f.getModifiers())&&!f.getName().equals("dead")){
 					try {
-						fs.put(f.getName(), f.get(oold));
+						fs1.put(f.getName(), f.get(oold));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}
+			fields.put(c, fs1);
 			c = c.getSuperclass();
 		}
 		for(Class<?> c1 : fields.keySet()){
 			Map<String, Object> fs =fields.get(c1);
 			for(String f : fs.keySet()){
 				try {
-					Field f1 = c1.getDeclaredField(f);
-					f1.setAccessible(true);
-					f1.set(c1.cast(onew), fs.get(f));
+					try{
+						Field f1 = c1.getDeclaredField(f);
+						f1.setAccessible(true);
+						f1.set(c1.cast(onew), fs.get(f));
+					}catch(Exception e1){
+
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
+		Field[] fi = c.getDeclaredFields();
+		for(int i = 0; i < fi.length; i++){
+			Field f = fi[i];
+			f.setAccessible(true);
+		}*/
 	}
 
 	public static void createClasses(){
 		try {
 			new CustomEntityIronGolem();
 			new CustomEntitySheep();
+			new CustomEntitySkeleton();
 			new CustomEntityVillager();
 			new CustomEntityZombie();
 		} catch (Exception e) {
@@ -81,7 +97,7 @@ public class CustomEntities {
 		}
 		return null;
 	}
-	
+
 	/***
 	 * Gets the CustomEntitySheep or clones and gets rid of the Minecraft EntitySheep with a copy as a CustomEntitySheep
 	 * @param e Bukkit Entity
@@ -93,6 +109,24 @@ public class CustomEntities {
 			return new CustomEntitySheep(e);
 		}else if(isNormalEntitySheep(e)){
 			CustomEntitySheep ces = new CustomEntitySheep(e.getLocation());
+			clone(NMSUtils.getHandle(e), ces.getEntity());
+			e.remove();
+			return ces;
+		}
+		return null;
+	}
+
+	/***
+	 * Gets the CustomEntitySkeleton or clones and gets rid of the Minecraft EntitySkeleton with a copy as a CustomEntitySkeleton
+	 * @param e Bukkit Entity
+	 * @return Instance of a CustomEntitySkeleton
+	 * @see CustomEntitySkeleton
+	 */
+	public static CustomEntitySkeleton getCustomEntitySkeleton(Entity e){
+		if(isCustomEntitySkeleton(e)){
+			return new CustomEntitySkeleton(e);
+		}else if(isNormalEntitySkeleton(e)){
+			CustomEntitySkeleton ces = new CustomEntitySkeleton(e.getLocation());
 			clone(NMSUtils.getHandle(e), ces.getEntity());
 			e.remove();
 			return ces;
@@ -117,7 +151,7 @@ public class CustomEntities {
 		}
 		return null;
 	}
-	
+
 	/***
 	 * Gets the CustomEntityZombie or clones and gets rid of the Minecraft EntityZombie with a copy as a CustomEntityZombie
 	 * @param e Bukkit Entity
@@ -136,13 +170,13 @@ public class CustomEntities {
 		}
 		return null;
 	}
-	
+
 	/*
 	 * =========================================================================================
 	 * ========================[Get new instance of a CustomEntity]=============================
 	 * =========================================================================================
 	 */
-	
+
 	/**
 	 * 
 	 * @param location Bukkit Location
@@ -152,7 +186,7 @@ public class CustomEntities {
 	public static CustomEntityIronGolem getNewCustomEntityIronGolem(Location location){
 		return new CustomEntityIronGolem(location);
 	}
-	
+
 	/**
 	 * 
 	 * @param location Bukkit Location
@@ -162,7 +196,17 @@ public class CustomEntities {
 	public static CustomEntitySheep getNewCustomEntitySheep(Location location){
 		return new CustomEntitySheep(location);
 	}
-	
+
+	/**
+	 * 
+	 * @param location Bukkit Location
+	 * @return New instance of a CustomEntitySkeleton
+	 * @see CustomEntitySkeleton
+	 */
+	public static CustomEntitySkeleton getNewCustomEntitySkeleton(Location location){
+		return new CustomEntitySkeleton(location);
+	}
+
 	/**
 	 * 
 	 * @param location Bukkit Location
@@ -172,7 +216,7 @@ public class CustomEntities {
 	public static CustomEntityVillager getNewCustomEntityVillager(Location location){
 		return new CustomEntityVillager(location);
 	}
-	
+
 	/**
 	 * 
 	 * @param location Bukkit Location
@@ -182,7 +226,7 @@ public class CustomEntities {
 	public static CustomEntityZombie getNewCustomEntityZombie(Location location){
 		return new CustomEntityZombie(location);
 	}
-	
+
 	/*
 	 * =========================================================================================
 	 * ==========================[Check instance of CustomEntity]===============================
@@ -206,7 +250,16 @@ public class CustomEntities {
 	public static boolean isCustomEntitySheep(Entity e){
 		return NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntitySheep");
 	}
-	
+
+	/**
+	 * 
+	 * @param e Bukkit Entity
+	 * @return If the Entity is made by CustomEntitiesAPI
+	 */
+	public static boolean isCustomEntitySkeleton(Entity e){
+		return NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntitySkeleton");
+	}
+
 	/**
 	 * 
 	 * @param e Bukkit Entity
@@ -224,7 +277,7 @@ public class CustomEntities {
 	public static boolean isCustomEntityZombie(Entity e){
 		return NMSUtils.getHandle(e).getClass().getName().equals("temp.CustomEntityZombie");
 	}
-	
+
 	/*
 	 * =========================================================================================
 	 * ==========================[Check instance of Normal Entity]==============================
@@ -236,19 +289,28 @@ public class CustomEntities {
 	 * @param e Bukkit Entity
 	 * @return If the Entity is a Minecraft Entity
 	 */
-	public static boolean isNormalEntitySheep(Entity e){
-		return NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() + "EntitySheep");
+	public static boolean isNormalEntityIronGolem(Entity e){
+		return NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() + "EntityIronGolem");
 	}
-	
+
 	/**
 	 * 
 	 * @param e Bukkit Entity
 	 * @return If the Entity is a Minecraft Entity
 	 */
-	public static boolean isNormalEntityIronGolem(Entity e){
-		return NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() + "EntityIronGolem");
+	public static boolean isNormalEntitySheep(Entity e){
+		return NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() + "EntitySheep");
 	}
-	
+
+	/**
+	 * 
+	 * @param e Bukkit Entity
+	 * @return If the Entity is a Minecraft Entity
+	 */
+	public static boolean isNormalEntitySkeleton(Entity e){
+		return NMSUtils.getHandle(e).getClass().getName().equals("net.minecraft.server." + NMSUtils.getVersion() + "EntitySkeleton");
+	}
+
 	/**
 	 * 
 	 * @param e Bukkit Entity

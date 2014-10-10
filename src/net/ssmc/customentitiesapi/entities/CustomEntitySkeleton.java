@@ -178,4 +178,53 @@ public class CustomEntitySkeleton extends CustomEntityMonster{
 			setAbleToMove();
 		}
 	}
+	
+	public void setGoalSelectorDefaultPathfinderGoals(){
+		try {
+			helper.getMethod("setGoalSelectorDefaultPathfinderGoals", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newGoalSelectorPathfinderGoalArrowAttackDefault(){
+		newGoalSelectorPathfinderGoalArrowAttack(1.0D, 20, 60, 15.0F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalArrowAttack(double d, int i, float f){
+		newGoalSelectorPathfinderGoalArrowAttack(d, i, i, f);
+	}
+	
+	public void newGoalSelectorPathfinderGoalArrowAttack(double d, int i, int i1, float f){
+		try {
+			helper.getMethod("newGoalSelectorPathfinderGoalArrowAttack", Object.class, double.class, int.class, int.class, float.class)
+			.invoke(null, entity, d, i, i1, f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeGoalSelectorPathfinderGoalArrowAttack(){
+		try {
+			helper.getMethod("removeGoalSelectorPathfinderGoalArrowAttack", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newGoalSelectorPathfinderGoalFleeSunDefault(){
+		newGoalSelectorPathfinderGoalFleeSun(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 8.0F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalMeleeAttackDefault(){
+		newGoalSelectorPathfinderGoalMeleeAttack(EntityName.ENTITYHUMAN, 1.2D, false);
+	}
 }
