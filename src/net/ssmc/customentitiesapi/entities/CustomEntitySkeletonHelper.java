@@ -36,12 +36,30 @@ public class CustomEntitySkeletonHelper extends CustomEntityMonsterHelper{
 			Object item = equipment.get(entityinsentient.cast(skeleton));
 
 			Object i = unpack(item)[0];
-
-			System.out.print(i.getClass());
 			try{
-				Class.forName("net.minecraft.server." + NMSUtils.getVersion() + "Items");
+				Class<?> items = Class.forName("net.minecraft.server." + getVersion() + "Items");
+				try{
+					if(i!=null&&i.getClass().getMethod("getItem").invoke(i)==items.getDeclaredField("BOW").get(null)){
+						newGoalSelectorPathfinderGoalArrowAttack(skeleton, 1.0D, 20, 60, 15.0F);
+					}else{
+						newGoalSelectorPathfinderGoalMeleeAttack(skeleton, "EntityHuman", 1.2D, false);
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}catch(Exception e){
-
+				Class<?> items = Class.forName("net.minecraft.server." + getVersion() + "Items");
+				try{
+					Object o = i.getClass().getMethod("getItem").invoke(i);
+					Object bow = items.getDeclaredField("BOW").get(null);
+					if(i!=null&&o.getClass().getField("id").get(o)==bow.getClass().getField("id").get(bow)){
+						newGoalSelectorPathfinderGoalArrowAttack(skeleton, 1.0D, 20, 60, 15.0F);
+					}else{
+						newGoalSelectorPathfinderGoalMeleeAttack(skeleton, "EntityHuman", 1.2D, false);
+					}
+				}catch(Exception e1){
+					e1.printStackTrace();
+				}
 			}
 
 		}catch(Exception e){
@@ -56,16 +74,16 @@ public class CustomEntitySkeletonHelper extends CustomEntityMonsterHelper{
 		return array2;
 	}
 
-	public static void newGoalSelectorPathFinferGoalArrowAttack(Object skeleton, double d, int i, int i1, float f){
+	public static void newGoalSelectorPathfinderGoalArrowAttack(Object skeleton, double d, int i, int i1, float f){
 		try{
 			Class<?> irangedentity = getNMSClass("IRangedEntity");
 			Class<?> pathfindergoal = getNMSClass("PathfinderGoal");
 
 			Object goalselector = getGoalSelector(skeleton);
 
-			Class<?> pathfindergoalarrowattack = getNMSClass("PathfinderGoalGoalArrowAttack");
+			Class<?> pathfindergoalarrowattack = getNMSClass("PathfinderGoalArrowAttack");
 			Object o = pathfindergoalarrowattack.getConstructor(irangedentity, double.class, int.class, int.class, float.class)
-					.newInstance(irangedentity.cast(skeleton), d);
+					.newInstance(irangedentity.cast(skeleton), d, i, i1, f);
 
 			goalselector.getClass().getMethod("a", int.class, pathfindergoal).invoke(goalselector, 3, o);
 		} catch (Exception e) {
