@@ -14,7 +14,6 @@ public abstract class CustomEntityLiving extends CustomEntity{
 				CtClass ces = cp.getAndRename("net.ssmc.customentitiesapi.entities.CustomEntityLivingHelper", "temp.CustomEntityLivingHelper");
 				ces.setSuperclass(cp.get("temp.CustomEntityHelper"));
 				ces.toClass();
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -22,6 +22,7 @@ public class Commands implements CommandExecutor{
 			CustomEntitySkeleton s2 = CustomEntities.getCustomEntitySkeleton(s1);
 			s2.removeGoalSelectorPathfinderGoalAll();
 			s2.setGoalSelectorDefaultPathfinderGoals();
+			s2.setDamageable(false);
 		}
 		return false;
 	}

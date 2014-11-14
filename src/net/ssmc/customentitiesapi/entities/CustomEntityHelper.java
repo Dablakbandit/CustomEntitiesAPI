@@ -91,4 +91,38 @@ public class CustomEntityHelper {
 			}
 		return equal;
 	}
+	
+	public static void setDamageable(Object entity){
+		try{
+			Class<?> entityc = getNMSClass("Entity");
+			Field f = entityc.getDeclaredField("invulnerable");
+			f.setAccessible(true);
+			f.set(entity, false);	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void setUndamageable(Object entity){
+		try{
+			Class<?> entityc = getNMSClass("Entity");
+			Field f = entityc.getDeclaredField("invulnerable");
+			f.setAccessible(true);
+			f.set(entity, true);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static boolean getDamageable(Object entity){
+		try{
+			Class<?> entityc = getNMSClass("Entity");
+			Field f = entityc.getDeclaredField("invulnerable");
+			f.setAccessible(true);
+			return (boolean)f.get(entity);
+		}catch(Exception e){
+			e.printStackTrace();
+			return true;
+		}
+	}
 }

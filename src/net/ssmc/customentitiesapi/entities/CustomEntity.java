@@ -73,7 +73,7 @@ public abstract class CustomEntity {
 				+ "return this.pitch;"
 				+ "}");
 	}
-	
+
 	public void teleportTo(Location location){
 		try {
 			entity.getClass().getMethod("teleportTo", location.getClass(), boolean.class).invoke(entity, location, false);
@@ -81,7 +81,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public int getAirTicks(){
 		try {
 			return (int) entity.getClass().getMethod("getAirTicks").invoke(entity);
@@ -90,7 +90,7 @@ public abstract class CustomEntity {
 			return 0;
 		}
 	}
-	
+
 	public int getId(){
 		try {
 			return (int) entity.getClass().getMethod("getId").invoke(entity);
@@ -99,7 +99,7 @@ public abstract class CustomEntity {
 			return 0;
 		}
 	}
-	
+
 	public UUID getUUID(){
 		try {
 			return (UUID) entity.getClass().getMethod("getUniqueID").invoke(entity);
@@ -108,7 +108,7 @@ public abstract class CustomEntity {
 			return null;
 		}
 	}
-	
+
 	public void setAirTicks(int i){
 		try {
 			entity.getClass().getMethod("setAirTicks", int.class).invoke(entity, i);
@@ -116,7 +116,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setInvisible(boolean flag){
 		try {
 			entity.getClass().getMethod("setInvisible", boolean.class).invoke(entity, flag);
@@ -124,7 +124,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setLocation(double d0, double d1, double d2){
 		try {
 			entity.getClass().getMethod("setLocation", double.class, double.class, double.class).invoke(entity, d0, d1, d2);
@@ -132,7 +132,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setOnFire(int i){
 		try {
 			entity.getClass().getMethod("setOnFire", int.class).invoke(entity, i);
@@ -140,7 +140,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setPosition(double d0, double d1, double d2){
 		try {
 			entity.getClass().getMethod("setPosition", double.class, double.class, double.class).invoke(entity, d0, d1, d2);
@@ -148,7 +148,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setPositionRotation(double d0, double d1, double d2, float f1, float f2){
 		try {
 			entity.getClass().getMethod("setPositionRotation", double.class, double.class, double.class, float.class, float.class).invoke(entity, d0, d1, d2, f1, f2);
@@ -156,7 +156,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setSneaking(boolean flag){
 		try {
 			entity.getClass().getMethod("setSneaking", boolean.class).invoke(entity, flag);
@@ -164,7 +164,7 @@ public abstract class CustomEntity {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Entity getBukkitEntity(){
 		try {
 			return (Entity) entity.getClass().getMethod("getBukkitEntity").invoke(entity);
@@ -173,7 +173,64 @@ public abstract class CustomEntity {
 			return null;
 		}
 	}
+
+	public void setDamageable(boolean value){
+		if(value){
+			try{
+				helper.getMethod("setDamageable", Object.class).invoke(null, entity);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else{
+			try{
+				helper.getMethod("setUndamageable", Object.class).invoke(null, entity);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void setUndamageable(boolean value){
+		if(!value){
+			try{
+				helper.getMethod("setDamageable", Object.class).invoke(null, entity);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else{
+			try{
+				helper.getMethod("setUndamageable", Object.class).invoke(null, entity);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void setDamageable(){
+		try{
+			helper.getMethod("setDamageable", Object.class).invoke(null, entity);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
+	public void setUndamageable(){
+		try{
+			helper.getMethod("setUndamageable", Object.class).invoke(null, entity);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean getDamageable(){
+		try{
+			return (boolean)helper.getMethod("getDamageable", Object.class).invoke(null, entity);
+		}catch(Exception e){
+			e.printStackTrace();
+			return true;
+		}
+	}
+
 	public Object getEntity(){
 		return this.entity;
 	}
