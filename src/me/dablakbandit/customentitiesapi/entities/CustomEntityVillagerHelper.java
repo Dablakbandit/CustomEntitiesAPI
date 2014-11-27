@@ -1,5 +1,7 @@
 package me.dablakbandit.customentitiesapi.entities;
 
+import java.lang.reflect.Field;
+
 public class CustomEntityVillagerHelper extends CustomEntityAgeableHelper{
 
 	public static void setUnableToMove(Object villager){
@@ -130,6 +132,26 @@ public class CustomEntityVillagerHelper extends CustomEntityAgeableHelper{
 	
 	public static void removeGoalSelectorPathfinderGoalPlay(Object villager){
 		removeGoalSelectorPathFinderGoal(villager, "PathfinderGoalPlay");
+	}
+	
+	public static void setTradeable(Object villager){
+		try{
+			Field f = villager.getClass().getDeclaredField("tradeable");
+			f.setAccessible(true);
+			f.set(villager, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void setUntradeable(Object villager){
+		try{
+			Field f = villager.getClass().getDeclaredField("tradeable");
+			f.setAccessible(true);
+			f.set(villager, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

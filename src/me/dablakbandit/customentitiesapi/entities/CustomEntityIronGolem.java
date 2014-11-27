@@ -58,7 +58,6 @@ public class CustomEntityIronGolem extends CustomEntityGolem{
 				CtClass entityirongolem = cp.getCtClass("net.minecraft.server." + NMSUtils.getVersion() + "EntityIronGolem");
 				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityIronGolem");
 				cp.importPackage("temp");
-				fields.add(new CtField(CtClass.booleanType, "pushable", ctClass));	
 				for(CtField f : fields){
 					ctClass.addField(f);
 				}
@@ -91,46 +90,6 @@ public class CustomEntityIronGolem extends CustomEntityGolem{
 			helper = Class.forName("temp.CustomEntityIronGolemHelper");
 		}catch(Exception e){
 			e.printStackTrace();
-		}
-	}
-
-	public void setAbleToMove(){
-		try {
-			entity.getClass().getMethod("setAbleToMove", double.class).invoke(entity, 1.0D);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setAbleToMove(boolean value){
-		if(value){
-			setAbleToMove();
-		}else{
-			setUnableToMove();
-		}
-	}
-
-	public void setAbleToMove(double d){
-		try {
-			entity.getClass().getMethod("setAbleToMove", double.class).invoke(entity, d);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setUnableToMove(){
-		try {
-			entity.getClass().getMethod("setUnableToMove").invoke(entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setUnableToMove(boolean value){
-		if(value){
-			setUnableToMove();
-		}else{
-			setAbleToMove();
 		}
 	}
 

@@ -5,4 +5,4 @@ version: 1.4
 commands:
   customentitiesapi:
     permission: customentitiesapi.test
-    alias: ces
+    aliases: ces

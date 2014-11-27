@@ -1,8 +1,11 @@
 package me.dablakbandit.customentitiesapi.entities;
 
 import ja.CtClass;
+import ja.CtConstructor;
 import ja.CtField;
+import ja.CtNewConstructor;
 import ja.CtNewMethod;
+import ja.CtPrimitiveType;
 import ja.LoaderClassPath;
 import me.dablakbandit.customentitiesapi.CustomEntitiesAPI;
 import me.dablakbandit.customentitiesapi.NMSUtils;
@@ -33,7 +36,7 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 
 		}
 	}
-	
+
 	public CustomEntityVillager(Object o){
 		this();
 		a();
@@ -119,14 +122,22 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 						+ "CustomEntityVillagerHelper.setAbleToMove(this, d);"
 						+ "}");
 				methods.add("public boolean a(EntityHuman paramEntityHuman){"
-						+ ""
+						+ "if(!this.tradeable)return false;"
+						+ "return super.a(paramEntityHuman);"
 						+ "}");
 				for(String m : methods){
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
+				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "World");
+				CtConstructor con = CtNewConstructor.make(new CtClass[]{cp.get("net.minecraft.server." + NMSUtils.getVersion() + "World"), CtPrimitiveType.intType}, null, ctClass);
+				con.insertAfter("this.tradeable = true;");
+				ctClass.addConstructor(con);
+				con = CtNewConstructor.make(new CtClass[]{cp.get("net.minecraft.server." + NMSUtils.getVersion() + "World")}, null, ctClass);
+				ctClass.addConstructor(con);
+				con.insertAfter("this.tradeable = true;");
 				methods.clear();
+				ctClass.writeFile(CustomEntitiesAPI.getInstance().getDataFolder().getAbsolutePath());
 				customentity = ctClass.toClass();
-				System.out.print("Villagers overided");
 			}catch (Exception e2) {
 				e2.printStackTrace();
 			}
@@ -147,46 +158,6 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 		}
 	}
 
-	public void setAbleToMove(){
-		try {
-			entity.getClass().getMethod("setAbleToMove", double.class).invoke(entity, 1.0D);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setAbleToMove(boolean value){
-		if(value){
-			setAbleToMove();
-		}else{
-			setUnableToMove();
-		}
-	}
-
-	public void setAbleToMove(double d){
-		try {
-			entity.getClass().getMethod("setAbleToMove", double.class).invoke(entity, d);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setUnableToMove(){
-		try {
-			entity.getClass().getMethod("setUnableToMove").invoke(entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setUnableToMove(boolean value){
-		if(value){
-			setUnableToMove();
-		}else{
-			setAbleToMove();
-		}
-	}
-	
 	public void setGoalSelectorDefaultPathfinderGoals(){
 		try {
 			helper.getMethod("setGoalSelectorDefaultPathfinderGoals", Object.class).invoke(null, entity);
@@ -318,6 +289,38 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 			entity.getClass().getMethod("setProfession", int.class).invoke(entity, i);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public final void setTradeable(){
+		try {
+			helper.getMethod("setTradeable", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public final void setTradeable(boolean value){
+		if(value){
+			setTradeable();
+		}else{
+			setUntradeable();
+		}
+	}
+
+	public final void setUntradeable(){
+		try {
+			helper.getMethod("setUntradeable", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public final void setUntradeable(boolean value){
+		if(value){
+			setUntradeable();
+		}else{
+			setTradeable();
 		}
 	}
 

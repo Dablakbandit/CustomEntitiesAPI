@@ -19,16 +19,8 @@ public class Commands implements CommandExecutor{
 			s2.setGoalSelectorDefaultPathfinderGoals();
 			s2.setDamageable(false);*/
 			//Player player = (Player)s;
-			CustomEntitySheep ces = CustomEntities.getNewCustomEntitySheep(((Player)s).getLocation());
-            ces.removeGoalSelectorPathfinderGoalAll();//Clears entities GoalSelector(same as "ces.setUnableToMove();")
-            ces.setPushable(false);//Makes the entity unpushable
-            ces.newGoalSelectorPathfinderGoalEatTileDefault();//Makes the entity able to eat grass                 
-           
-            CustomEntityZombie cez = CustomEntities.getNewCustomEntityZombie(((Player)s).getLocation());
-            cez.setUnableToMove();//Clears entities GoalSelector(same as "cez.removeGoalSelectorPathfinderGoalAll();")
-            cez.setPushable(false);//Makes the entity unpushable
-            cez.newGoalSelectorPathfinderGoalMeleeAttack(EntityName.ENTITYHUMAN, 1.0D, false);//Makes the entity attack Players
-            cez.newGoalSelectorPathfinderGoalRandomStroll(5.0D);//Makes the entity walk randomly around x5 the speed
+			CustomEntityVillager cev = CustomEntities.getNewCustomEntityVillager(((Player)s).getLocation());
+			cev.setUntradeable();
 		}
 		return false;
 	}

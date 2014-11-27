@@ -294,6 +294,46 @@ public abstract class CustomEntity {
 			return true;
 		}
 	}
+	
+	public final void setAbleToMove(){
+		try {
+			helper.getMethod("setAbleToMove", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public final void setAbleToMove(boolean value){
+		if(value){
+			setAbleToMove();
+		}else{
+			setUnableToMove();
+		}
+	}
+
+	public final void setAbleToMove(double d){
+		try {
+			helper.getMethod("setAbleToMove", Object.class, double.class).invoke(null, entity, d);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public final void setUnableToMove(){
+		try {
+			helper.getMethod("setUnableToMove", Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public final void setUnableToMove(boolean value){
+		if(value){
+			setUnableToMove();
+		}else{
+			setAbleToMove();
+		}
+	}
 
 	public Object getEntity(){
 		return this.entity;

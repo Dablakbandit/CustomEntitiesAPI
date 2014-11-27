@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.dablakbandit.customentitiesapi.commands.Commands;
-import me.dablakbandit.customentitiesapi.listeners.PlayerJoin;
-import me.dablakbandit.customentitiesapi.listeners.PlayerLeave;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CustomEntitiesAPI extends JavaPlugin{
@@ -19,8 +16,6 @@ public class CustomEntitiesAPI extends JavaPlugin{
 
 	public void onEnable(){
 		getCommand("customentitiesapi").setExecutor(new Commands());
-		Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
-		Bukkit.getPluginManager().registerEvents(new PlayerLeave(), this);
 	}
 
 	public void onLoad(){
@@ -74,7 +69,7 @@ public class CustomEntitiesAPI extends JavaPlugin{
 					}
 				}
 			}
-
+			System.out.print("Overriden entity " + name + " with " + test.getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
