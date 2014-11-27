@@ -1,5 +1,5 @@
 name: CustomEntitiesAPI
-main: net.ssmc.customentitiesapi.CustomEntitiesAPI
+main: me.dablakbandit.customentitiesapi.CustomEntitiesAPI
 author: Dablakbandit
 version: 1.4
 commands:
