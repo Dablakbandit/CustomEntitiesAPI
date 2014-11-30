@@ -20,11 +20,11 @@ package ja.tools.reflect;
  * Signals that <code>ClassMetaobject.newInstance()</code> fails.
  */
 public class CannotCreateException extends Exception {
-    public CannotCreateException(String s) {
-        super(s);
-    }
+	public CannotCreateException(String s) {
+		super(s);
+	}
 
-    public CannotCreateException(Exception e) {
-        super("by " + e.toString());
-    }
+	public CannotCreateException(Exception e) {
+		super("by " + e.toString());
+	}
 }

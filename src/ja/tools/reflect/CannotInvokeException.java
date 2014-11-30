@@ -20,50 +20,52 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.IllegalAccessException;
 
 /**
- * Thrown when method invocation using the reflection API has thrown
- * an exception.
- *
+ * Thrown when method invocation using the reflection API has thrown an
+ * exception.
+ * 
  * @see ja.tools.reflect.Metaobject#trapMethodcall(int, Object[])
  * @see ja.tools.reflect.ClassMetaobject#trapMethodcall(int, Object[])
  * @see ja.tools.reflect.ClassMetaobject#invoke(Object, int, Object[])
  */
 public class CannotInvokeException extends RuntimeException {
 
-    private Throwable err = null;
+	private Throwable err = null;
 
-    /**
-     * Returns the cause of this exception.  It may return null.
-     */
-    public Throwable getReason() { return err; }
+	/**
+	 * Returns the cause of this exception. It may return null.
+	 */
+	public Throwable getReason() {
+		return err;
+	}
 
-    /**
-     * Constructs a CannotInvokeException with an error message.
-     */
-    public CannotInvokeException(String reason) {
-        super(reason);
-    }
+	/**
+	 * Constructs a CannotInvokeException with an error message.
+	 */
+	public CannotInvokeException(String reason) {
+		super(reason);
+	}
 
-    /**
-     * Constructs a CannotInvokeException with an InvocationTargetException.
-     */
-    public CannotInvokeException(InvocationTargetException e) {
-        super("by " + e.getTargetException().toString());
-        err = e.getTargetException();
-    }
+	/**
+	 * Constructs a CannotInvokeException with an InvocationTargetException.
+	 */
+	public CannotInvokeException(InvocationTargetException e) {
+		super("by " + e.getTargetException().toString());
+		err = e.getTargetException();
+	}
 
-    /**
-     * Constructs a CannotInvokeException with an IllegalAccessException.
-     */
-    public CannotInvokeException(IllegalAccessException e) {
-        super("by " + e.toString());
-        err = e;
-    }
+	/**
+	 * Constructs a CannotInvokeException with an IllegalAccessException.
+	 */
+	public CannotInvokeException(IllegalAccessException e) {
+		super("by " + e.toString());
+		err = e;
+	}
 
-    /**
-     * Constructs a CannotInvokeException with an ClassNotFoundException.
-     */
-    public CannotInvokeException(ClassNotFoundException e) {
-        super("by " + e.toString());
-        err = e;
-    }
+	/**
+	 * Constructs a CannotInvokeException with an ClassNotFoundException.
+	 */
+	public CannotInvokeException(ClassNotFoundException e) {
+		super("by " + e.toString());
+		err = e;
+	}
 }

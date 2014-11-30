@@ -17,21 +17,19 @@
 package ja.tools.rmi;
 
 /**
- * A template used for defining a proxy class.
- * The class file of this class is read by the <code>StubGenerator</code>
- * class.
+ * A template used for defining a proxy class. The class file of this class is
+ * read by the <code>StubGenerator</code> class.
  */
 public class Sample {
-    private ObjectImporter importer;
-    private int objectId;
+	private ObjectImporter importer;
+	private int objectId;
 
-    public Object forward(Object[] args, int identifier) {
-        return importer.call(objectId, identifier, args);
-    }
+	public Object forward(Object[] args, int identifier) {
+		return importer.call(objectId, identifier, args);
+	}
 
-    public static Object forwardStatic(Object[] args, int identifier)
-        throws RemoteException
-    {
-        throw new RemoteException("cannot call a static method.");
-    }
+	public static Object forwardStatic(Object[] args, int identifier)
+			throws RemoteException {
+		throw new RemoteException("cannot call a static method.");
+	}
 }

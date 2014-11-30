@@ -17,17 +17,16 @@
 package ja.util.proxy;
 
 /**
- * The interface implemented by proxy classes.
- * This interface only provides a setter method.
- * To obtain a handler, call {@link ProxyFactory#getHandler(Proxy)}.
- *
+ * The interface implemented by proxy classes. This interface only provides a
+ * setter method. To obtain a handler, call
+ * {@link ProxyFactory#getHandler(Proxy)}.
+ * 
  * @see ProxyFactory
  * @since 3.16
  */
 public interface Proxy {
-    /**
-     * Sets a handler.  It can be used for changing handlers
-     * during runtime.
-     */
-    void setHandler(MethodHandler mi);
+	/**
+	 * Sets a handler. It can be used for changing handlers during runtime.
+	 */
+	void setHandler(MethodHandler mi);
 }

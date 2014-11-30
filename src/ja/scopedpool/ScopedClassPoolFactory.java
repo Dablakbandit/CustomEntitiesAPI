@@ -20,20 +20,19 @@ import ja.ClassPool;
 
 /**
  * A factory interface.
- *
+ * 
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  * @version $Revision: 1.4 $
  */
 public interface ScopedClassPoolFactory {
-    /**
-     * Makes an instance.
-     */
-    ScopedClassPool create(ClassLoader cl, ClassPool src,
-                           ScopedClassPoolRepository repository);
+	/**
+	 * Makes an instance.
+	 */
+	ScopedClassPool create(ClassLoader cl, ClassPool src,
+			ScopedClassPoolRepository repository);
 
-    /**
-     * Makes an instance.
-     */
-    ScopedClassPool create(ClassPool src,
-                           ScopedClassPoolRepository repository);
+	/**
+	 * Makes an instance.
+	 */
+	ScopedClassPool create(ClassPool src, ScopedClassPoolRepository repository);
 }

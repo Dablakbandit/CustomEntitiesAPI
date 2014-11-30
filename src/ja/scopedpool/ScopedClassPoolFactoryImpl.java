@@ -20,24 +20,24 @@ import ja.ClassPool;
 
 /**
  * An implementation of factory.
- *
+ * 
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  * @version $Revision: 1.5 $
  */
 public class ScopedClassPoolFactoryImpl implements ScopedClassPoolFactory {
-    /**
-     * Makes an instance.
-     */
-    public ScopedClassPool create(ClassLoader cl, ClassPool src,
-                                  ScopedClassPoolRepository repository) {
-        return new ScopedClassPool(cl, src, repository, false);
-    }
+	/**
+	 * Makes an instance.
+	 */
+	public ScopedClassPool create(ClassLoader cl, ClassPool src,
+			ScopedClassPoolRepository repository) {
+		return new ScopedClassPool(cl, src, repository, false);
+	}
 
-    /**
-     * Makes an instance.
-     */
-    public ScopedClassPool create(ClassPool src,
-                                  ScopedClassPoolRepository repository) {
-        return new ScopedClassPool(null, src, repository, true);
-    }
+	/**
+	 * Makes an instance.
+	 */
+	public ScopedClassPool create(ClassPool src,
+			ScopedClassPoolRepository repository) {
+		return new ScopedClassPool(null, src, repository, true);
+	}
 }

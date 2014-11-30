@@ -19,12 +19,12 @@ package ja.bytecode.stackmap;
 import ja.bytecode.StackMapTable;
 
 public interface TypeTag {
-    String TOP_TYPE = "*top*";
-    TypeData TOP = new TypeData.BasicType(TOP_TYPE, StackMapTable.TOP);
-    TypeData INTEGER = new TypeData.BasicType("int", StackMapTable.INTEGER);
-    TypeData FLOAT = new TypeData.BasicType("float", StackMapTable.FLOAT);
-    TypeData DOUBLE = new TypeData.BasicType("double", StackMapTable.DOUBLE);
-    TypeData LONG = new TypeData.BasicType("long", StackMapTable.LONG);
+	String TOP_TYPE = "*top*";
+	TypeData TOP = new TypeData.BasicType(TOP_TYPE, StackMapTable.TOP);
+	TypeData INTEGER = new TypeData.BasicType("int", StackMapTable.INTEGER);
+	TypeData FLOAT = new TypeData.BasicType("float", StackMapTable.FLOAT);
+	TypeData DOUBLE = new TypeData.BasicType("double", StackMapTable.DOUBLE);
+	TypeData LONG = new TypeData.BasicType("long", StackMapTable.LONG);
 
-    // and NULL, THIS, OBJECT, UNINIT
+	// and NULL, THIS, OBJECT, UNINIT
 }

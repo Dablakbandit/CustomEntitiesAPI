@@ -17,15 +17,15 @@
 package ja.tools.rmi;
 
 /**
- * <code>RemoteException</code> represents any exception thrown
- * during remote method invocation.
+ * <code>RemoteException</code> represents any exception thrown during remote
+ * method invocation.
  */
 public class RemoteException extends RuntimeException {
-    public RemoteException(String msg) {
-        super(msg);
-    }
+	public RemoteException(String msg) {
+		super(msg);
+	}
 
-    public RemoteException(Exception e) {
-        super("by " + e.toString());
-    }
+	public RemoteException(Exception e) {
+		super("by " + e.toString());
+	}
 }

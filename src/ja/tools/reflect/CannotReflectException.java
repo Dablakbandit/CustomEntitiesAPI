@@ -19,17 +19,16 @@ package ja.tools.reflect;
 import ja.CannotCompileException;
 
 /**
- * Thrown by <code>makeReflective()</code> in <code>Reflection</code>
- * when there is an attempt to reflect
- * a class that is either an interface or a subclass of
+ * Thrown by <code>makeReflective()</code> in <code>Reflection</code> when there
+ * is an attempt to reflect a class that is either an interface or a subclass of
  * either ClassMetaobject or Metaobject.
- *
+ * 
  * @author Brett Randall
  * @see ja.tools.reflect.Reflection#makeReflective(CtClass,CtClass,CtClass)
  * @see ja.CannotCompileException
  */
 public class CannotReflectException extends CannotCompileException {
-    public CannotReflectException(String msg) {
-        super(msg);
-    }
+	public CannotReflectException(String msg) {
+		super(msg);
+	}
 }

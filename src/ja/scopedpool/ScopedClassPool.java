@@ -35,275 +35,271 @@ import ja.NotFoundException;
  * @version $Revision: 1.8 $
  */
 public class ScopedClassPool extends ClassPool {
-    protected ScopedClassPoolRepository repository;
+	protected ScopedClassPoolRepository repository;
 
-    protected WeakReference classLoader;
+	protected WeakReference classLoader;
 
-    protected LoaderClassPath classPath;
+	protected LoaderClassPath classPath;
 
-    protected SoftValueHashMap softcache = new SoftValueHashMap();
-    
-    boolean isBootstrapCl = true;
+	protected SoftValueHashMap softcache = new SoftValueHashMap();
 
-    static {
-        ClassPool.doPruning = false;
-        ClassPool.releaseUnmodifiedClassFile = false;
-    }
+	boolean isBootstrapCl = true;
 
-    /**
-     * Create a new ScopedClassPool.
-     * 
-     * @param cl
-     *            the classloader
-     * @param src
-     *            the original class pool
-     * @param repository
-     *            the repository
-     *@deprecated
-     */
-    protected ScopedClassPool(ClassLoader cl, ClassPool src,
-            ScopedClassPoolRepository repository) {
-       this(cl, src, repository, false);
-    }
-    
-    /**
-     * Create a new ScopedClassPool.
-     * 
-     * @param cl
-     *            the classloader
-     * @param src
-     *            the original class pool
-     * @param repository
-     *            the repository
-     * @param isTemp
-     *            Whether this is a temporary pool used to resolve references
-     */
-    protected ScopedClassPool(ClassLoader cl, ClassPool src, ScopedClassPoolRepository repository, boolean isTemp)
-    {
-       super(src);
-       this.repository = repository;
-       this.classLoader = new WeakReference(cl);
-       if (cl != null) {
-           classPath = new LoaderClassPath(cl);
-           this.insertClassPath(classPath);
-       }
-       childFirstLookup = true;
-       if (!isTemp && cl == null)
-       {
-          isBootstrapCl = true;
-       }
-    }
+	static {
+		ClassPool.doPruning = false;
+		ClassPool.releaseUnmodifiedClassFile = false;
+	}
 
-    /**
-     * Get the class loader
-     * 
-     * @return the class loader
-     */
-    public ClassLoader getClassLoader() {
-       ClassLoader cl = getClassLoader0();
-       if (cl == null && !isBootstrapCl)
-       {
-          throw new IllegalStateException(
-                  "ClassLoader has been garbage collected");
-       }
-       return cl;
-    }
+	/**
+	 * Create a new ScopedClassPool.
+	 * 
+	 * @param cl
+	 *            the classloader
+	 * @param src
+	 *            the original class pool
+	 * @param repository
+	 *            the repository
+	 * @deprecated
+	 */
+	protected ScopedClassPool(ClassLoader cl, ClassPool src,
+			ScopedClassPoolRepository repository) {
+		this(cl, src, repository, false);
+	}
 
-    protected ClassLoader getClassLoader0() {
-       return (ClassLoader)classLoader.get();
-    }
+	/**
+	 * Create a new ScopedClassPool.
+	 * 
+	 * @param cl
+	 *            the classloader
+	 * @param src
+	 *            the original class pool
+	 * @param repository
+	 *            the repository
+	 * @param isTemp
+	 *            Whether this is a temporary pool used to resolve references
+	 */
+	protected ScopedClassPool(ClassLoader cl, ClassPool src,
+			ScopedClassPoolRepository repository, boolean isTemp) {
+		super(src);
+		this.repository = repository;
+		this.classLoader = new WeakReference(cl);
+		if (cl != null) {
+			classPath = new LoaderClassPath(cl);
+			this.insertClassPath(classPath);
+		}
+		childFirstLookup = true;
+		if (!isTemp && cl == null) {
+			isBootstrapCl = true;
+		}
+	}
 
-    /**
-     * Close the class pool
-     */
-    public void close() {
-        this.removeClassPath(classPath);
-        classPath.close();
-        classes.clear();
-        softcache.clear();
-    }
+	/**
+	 * Get the class loader
+	 * 
+	 * @return the class loader
+	 */
+	public ClassLoader getClassLoader() {
+		ClassLoader cl = getClassLoader0();
+		if (cl == null && !isBootstrapCl) {
+			throw new IllegalStateException(
+					"ClassLoader has been garbage collected");
+		}
+		return cl;
+	}
 
-    /**
-     * Flush a class
-     * 
-     * @param classname
-     *            the class to flush
-     */
-    public synchronized void flushClass(String classname) {
-        classes.remove(classname);
-        softcache.remove(classname);
-    }
+	protected ClassLoader getClassLoader0() {
+		return (ClassLoader) classLoader.get();
+	}
 
-    /**
-     * Soften a class
-     * 
-     * @param clazz
-     *            the class
-     */
-    public synchronized void soften(CtClass clazz) {
-        if (repository.isPrune())
-            clazz.prune();
-        classes.remove(clazz.getName());
-        softcache.put(clazz.getName(), clazz);
-    }
+	/**
+	 * Close the class pool
+	 */
+	public void close() {
+		this.removeClassPath(classPath);
+		classPath.close();
+		classes.clear();
+		softcache.clear();
+	}
 
-    /**
-     * Whether the classloader is loader
-     * 
-     * @return false always
-     */
-    public boolean isUnloadedClassLoader() {
-        return false;
-    }
+	/**
+	 * Flush a class
+	 * 
+	 * @param classname
+	 *            the class to flush
+	 */
+	public synchronized void flushClass(String classname) {
+		classes.remove(classname);
+		softcache.remove(classname);
+	}
 
-    /**
-     * Get the cached class
-     * 
-     * @param classname
-     *            the class name
-     * @return the class
-     */
-    protected CtClass getCached(String classname) {
-        CtClass clazz = getCachedLocally(classname);
-        if (clazz == null) {
-            boolean isLocal = false;
+	/**
+	 * Soften a class
+	 * 
+	 * @param clazz
+	 *            the class
+	 */
+	public synchronized void soften(CtClass clazz) {
+		if (repository.isPrune())
+			clazz.prune();
+		classes.remove(clazz.getName());
+		softcache.put(clazz.getName(), clazz);
+	}
 
-            ClassLoader dcl = getClassLoader0();
-            if (dcl != null) {
-                final int lastIndex = classname.lastIndexOf('$');
-                String classResourceName = null;
-                if (lastIndex < 0) {
-                    classResourceName = classname.replaceAll("[\\.]", "/")
-                            + ".class";
-                }
-                else {
-                    classResourceName = classname.substring(0, lastIndex)
-                            .replaceAll("[\\.]", "/")
-                            + classname.substring(lastIndex) + ".class";
-                }
+	/**
+	 * Whether the classloader is loader
+	 * 
+	 * @return false always
+	 */
+	public boolean isUnloadedClassLoader() {
+		return false;
+	}
 
-                isLocal = dcl.getResource(classResourceName) != null;
-            }
+	/**
+	 * Get the cached class
+	 * 
+	 * @param classname
+	 *            the class name
+	 * @return the class
+	 */
+	protected CtClass getCached(String classname) {
+		CtClass clazz = getCachedLocally(classname);
+		if (clazz == null) {
+			boolean isLocal = false;
 
-            if (!isLocal) {
-                Map registeredCLs = repository.getRegisteredCLs();
-                synchronized (registeredCLs) {
-                    Iterator it = registeredCLs.values().iterator();
-                    while (it.hasNext()) {
-                        ScopedClassPool pool = (ScopedClassPool)it.next();
-                        if (pool.isUnloadedClassLoader()) {
-                            repository.unregisterClassLoader(pool
-                                    .getClassLoader());
-                            continue;
-                        }
+			ClassLoader dcl = getClassLoader0();
+			if (dcl != null) {
+				final int lastIndex = classname.lastIndexOf('$');
+				String classResourceName = null;
+				if (lastIndex < 0) {
+					classResourceName = classname.replaceAll("[\\.]", "/")
+							+ ".class";
+				} else {
+					classResourceName = classname.substring(0, lastIndex)
+							.replaceAll("[\\.]", "/")
+							+ classname.substring(lastIndex) + ".class";
+				}
 
-                        clazz = pool.getCachedLocally(classname);
-                        if (clazz != null) {
-                            return clazz;
-                        }
-                    }
-                }
-            }
-        }
-        // *NOTE* NEED TO TEST WHEN SUPERCLASS IS IN ANOTHER UCL!!!!!!
-        return clazz;
-    }
+				isLocal = dcl.getResource(classResourceName) != null;
+			}
 
-    /**
-     * Cache a class
-     * 
-     * @param classname
-     *            the class name
-     * @param c
-     *            the ctClass
-     * @param dynamic
-     *            whether the class is dynamically generated
-     */
-    protected void cacheCtClass(String classname, CtClass c, boolean dynamic) {
-        if (dynamic) {
-            super.cacheCtClass(classname, c, dynamic);
-        }
-        else {
-            if (repository.isPrune())
-                c.prune();
-            softcache.put(classname, c);
-        }
-    }
+			if (!isLocal) {
+				Map registeredCLs = repository.getRegisteredCLs();
+				synchronized (registeredCLs) {
+					Iterator it = registeredCLs.values().iterator();
+					while (it.hasNext()) {
+						ScopedClassPool pool = (ScopedClassPool) it.next();
+						if (pool.isUnloadedClassLoader()) {
+							repository.unregisterClassLoader(pool
+									.getClassLoader());
+							continue;
+						}
 
-    /**
-     * Lock a class into the cache
-     * 
-     * @param c
-     *            the class
-     */
-    public void lockInCache(CtClass c) {
-        super.cacheCtClass(c.getName(), c, false);
-    }
+						clazz = pool.getCachedLocally(classname);
+						if (clazz != null) {
+							return clazz;
+						}
+					}
+				}
+			}
+		}
+		// *NOTE* NEED TO TEST WHEN SUPERCLASS IS IN ANOTHER UCL!!!!!!
+		return clazz;
+	}
 
-    /**
-     * Whether the class is cached in this pooled
-     * 
-     * @param classname
-     *            the class name
-     * @return the cached class
-     */
-    protected CtClass getCachedLocally(String classname) {
-        CtClass cached = (CtClass)classes.get(classname);
-        if (cached != null)
-            return cached;
-        synchronized (softcache) {
-            return (CtClass)softcache.get(classname);
-        }
-    }
+	/**
+	 * Cache a class
+	 * 
+	 * @param classname
+	 *            the class name
+	 * @param c
+	 *            the ctClass
+	 * @param dynamic
+	 *            whether the class is dynamically generated
+	 */
+	protected void cacheCtClass(String classname, CtClass c, boolean dynamic) {
+		if (dynamic) {
+			super.cacheCtClass(classname, c, dynamic);
+		} else {
+			if (repository.isPrune())
+				c.prune();
+			softcache.put(classname, c);
+		}
+	}
 
-    /**
-     * Get any local copy of the class
-     * 
-     * @param classname
-     *            the class name
-     * @return the class
-     * @throws NotFoundException
-     *             when the class is not found
-     */
-    public synchronized CtClass getLocally(String classname)
-            throws NotFoundException {
-        softcache.remove(classname);
-        CtClass clazz = (CtClass)classes.get(classname);
-        if (clazz == null) {
-            clazz = createCtClass(classname, true);
-            if (clazz == null)
-                throw new NotFoundException(classname);
-            super.cacheCtClass(classname, clazz, false);
-        }
+	/**
+	 * Lock a class into the cache
+	 * 
+	 * @param c
+	 *            the class
+	 */
+	public void lockInCache(CtClass c) {
+		super.cacheCtClass(c.getName(), c, false);
+	}
 
-        return clazz;
-    }
+	/**
+	 * Whether the class is cached in this pooled
+	 * 
+	 * @param classname
+	 *            the class name
+	 * @return the cached class
+	 */
+	protected CtClass getCachedLocally(String classname) {
+		CtClass cached = (CtClass) classes.get(classname);
+		if (cached != null)
+			return cached;
+		synchronized (softcache) {
+			return (CtClass) softcache.get(classname);
+		}
+	}
 
-    /**
-     * Convert a ja class to a java class
-     * 
-     * @param ct
-     *            the ja class
-     * @param loader
-     *            the loader
-     * @throws CannotCompileException
-     *             for any error
-     */
-    public Class toClass(CtClass ct, ClassLoader loader, ProtectionDomain domain)
-            throws CannotCompileException {
-        // We need to pass up the classloader stored in this pool, as the
-        // default implementation uses the Thread context cl.
-        // In the case of JSP's in Tomcat,
-        // org.apache.jasper.servlet.JasperLoader will be stored here, while
-        // it's parent
-        // org.jboss.web.tomcat.tc5.WebCtxLoader$ENCLoader is used as the Thread
-        // context cl. The invocation class needs to
-        // be generated in the JasperLoader classloader since in the case of
-        // method invocations, the package name will be
-        // the same as for the class generated from the jsp, i.e.
-        // org.apache.jsp. For classes belonging to org.apache.jsp,
-        // JasperLoader does NOT delegate to its parent if it cannot find them.
-        lockInCache(ct);
-        return super.toClass(ct, getClassLoader0(), domain);
-    }
+	/**
+	 * Get any local copy of the class
+	 * 
+	 * @param classname
+	 *            the class name
+	 * @return the class
+	 * @throws NotFoundException
+	 *             when the class is not found
+	 */
+	public synchronized CtClass getLocally(String classname)
+			throws NotFoundException {
+		softcache.remove(classname);
+		CtClass clazz = (CtClass) classes.get(classname);
+		if (clazz == null) {
+			clazz = createCtClass(classname, true);
+			if (clazz == null)
+				throw new NotFoundException(classname);
+			super.cacheCtClass(classname, clazz, false);
+		}
+
+		return clazz;
+	}
+
+	/**
+	 * Convert a ja class to a java class
+	 * 
+	 * @param ct
+	 *            the ja class
+	 * @param loader
+	 *            the loader
+	 * @throws CannotCompileException
+	 *             for any error
+	 */
+	public Class toClass(CtClass ct, ClassLoader loader, ProtectionDomain domain)
+			throws CannotCompileException {
+		// We need to pass up the classloader stored in this pool, as the
+		// default implementation uses the Thread context cl.
+		// In the case of JSP's in Tomcat,
+		// org.apache.jasper.servlet.JasperLoader will be stored here, while
+		// it's parent
+		// org.jboss.web.tomcat.tc5.WebCtxLoader$ENCLoader is used as the Thread
+		// context cl. The invocation class needs to
+		// be generated in the JasperLoader classloader since in the case of
+		// method invocations, the package name will be
+		// the same as for the class generated from the jsp, i.e.
+		// org.apache.jsp. For classes belonging to org.apache.jsp,
+		// JasperLoader does NOT delegate to its parent if it cannot find them.
+		lockInCache(ct);
+		return super.toClass(ct, getClassLoader0(), domain);
+	}
 }

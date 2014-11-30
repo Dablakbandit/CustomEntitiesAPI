@@ -21,38 +21,45 @@ import ja.bytecode.ClassFile;
 import ja.bytecode.ClassFilePrinter;
 
 /**
- * Dump is a tool for viewing the class definition in the given
- * class file.  Unlike the JDK javap tool, Dump works even if
- * the class file is broken.
- *
- * <p>For example,
- * <ul><pre>% java ja.tools.Dump foo.class</pre></ul>
- *
- * <p>prints the contents of the constant pool and the list of methods
- * and fields.
+ * Dump is a tool for viewing the class definition in the given class file.
+ * Unlike the JDK javap tool, Dump works even if the class file is broken.
+ * 
+ * <p>
+ * For example,
+ * <ul>
+ * 
+ * <pre>
+ * % java ja.tools.Dump foo.class
+ * </pre>
+ * 
+ * </ul>
+ * 
+ * <p>
+ * prints the contents of the constant pool and the list of methods and fields.
  */
 public class Dump {
-    private Dump() {}
+	private Dump() {
+	}
 
-    /**
-     * Main method.
-     *
-     * @param args           <code>args[0]</code> is the class file name.
-     */
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.err.println("Usage: java Dump <class file name>");
-            return;
-        }
+	/**
+	 * Main method.
+	 * 
+	 * @param args
+	 *            <code>args[0]</code> is the class file name.
+	 */
+	public static void main(String[] args) throws Exception {
+		if (args.length != 1) {
+			System.err.println("Usage: java Dump <class file name>");
+			return;
+		}
 
-        DataInputStream in = new DataInputStream(
-                                         new FileInputStream(args[0]));
-        ClassFile w = new ClassFile(in);
-        PrintWriter out = new PrintWriter(System.out, true);
-        out.println("*** constant pool ***");
-        w.getConstPool().print(out);
-        out.println();
-        out.println("*** members ***");
-        ClassFilePrinter.print(w, out);
-    }
+		DataInputStream in = new DataInputStream(new FileInputStream(args[0]));
+		ClassFile w = new ClassFile(in);
+		PrintWriter out = new PrintWriter(System.out, true);
+		out.println("*** constant pool ***");
+		w.getConstPool().print(out);
+		out.println();
+		out.println("*** members ***");
+		ClassFilePrinter.print(w, out);
+	}
 }

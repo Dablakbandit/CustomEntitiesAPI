@@ -17,9 +17,9 @@
 package ja.runtime;
 
 /**
- * A support class for compiling a method declared in an inner class.
- * This support class is required at runtime
- * only if the method calls a private constructor in the enclosing class.
+ * A support class for compiling a method declared in an inner class. This
+ * support class is required at runtime only if the method calls a private
+ * constructor in the enclosing class.
  */
 public class Inner {
 }

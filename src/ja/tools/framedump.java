@@ -20,29 +20,39 @@ import ja.CtClass;
 import ja.bytecode.analysis.FramePrinter;
 
 /**
- * framedump is a tool for viewing a merged combination of the instructions and frame state
- *  of all methods in a class.
- *
- * <p>For example,
- * <ul><pre>% java ja.tools.framedump foo.class</pre></ul>
+ * framedump is a tool for viewing a merged combination of the instructions and
+ * frame state of all methods in a class.
+ * 
+ * <p>
+ * For example,
+ * <ul>
+ * 
+ * <pre>
+ * % java ja.tools.framedump foo.class
+ * </pre>
+ * 
+ * </ul>
  */
 public class framedump {
-    private framedump() {}
+	private framedump() {
+	}
 
-    /**
-     * Main method.
-     *
-     * @param args <code>args[0]</code> is the class file name.
-     */
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.err.println("Usage: java ja.tools.framedump <class file name>");
-            return;
-        }
-        
-        ClassPool pool = ClassPool.getDefault();
-        CtClass clazz = pool.get(args[0]);
-        System.out.println("Frame Dump of " + clazz.getName() + ":");
-        FramePrinter.print(clazz, System.out);
-    }
+	/**
+	 * Main method.
+	 * 
+	 * @param args
+	 *            <code>args[0]</code> is the class file name.
+	 */
+	public static void main(String[] args) throws Exception {
+		if (args.length != 1) {
+			System.err
+					.println("Usage: java ja.tools.framedump <class file name>");
+			return;
+		}
+
+		ClassPool pool = ClassPool.getDefault();
+		CtClass clazz = pool.get(args[0]);
+		System.out.println("Frame Dump of " + clazz.getName() + ":");
+		FramePrinter.print(clazz, System.out);
+	}
 }

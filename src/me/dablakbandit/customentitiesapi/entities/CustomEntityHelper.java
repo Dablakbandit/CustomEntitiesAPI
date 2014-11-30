@@ -1,20 +1,22 @@
 package me.dablakbandit.customentitiesapi.entities;
 
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
 
 public class CustomEntityHelper {
-	
-	public static Object createEntity(Object world0, Class<?> entity, double x, double y, double z, float yaw, float pitch){
+
+	public static Object createEntity(Object world0, Class<?> entity, double x,
+			double y, double z, float yaw, float pitch) {
 		try {
 			Class<?> world = getNMSClass("World");
 			Object world1 = world.cast(world0);
 			Object entity1 = entity.getConstructor(world).newInstance(world1);
-			entity1.getClass().getMethod("setLocation", double.class, double.class, double.class, float.class, float.class)
-			.invoke(entity1, x, y, z, yaw, pitch);
+			entity1.getClass()
+					.getMethod("setLocation", double.class, double.class,
+							double.class, float.class, float.class)
+					.invoke(entity1, x, y, z, yaw, pitch);
 			return entity1;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,7 +75,9 @@ public class CustomEntityHelper {
 	public static Method getMethod(Class<?> clazz, String name,
 			Class<?>... args) {
 		for (Method m : clazz.getMethods())
-			if (m.getName().equals(name) && (args.length == 0 || ClassListEqual(args, m.getParameterTypes()))) {
+			if (m.getName().equals(name)
+					&& (args.length == 0 || ClassListEqual(args,
+							m.getParameterTypes()))) {
 				m.setAccessible(true);
 				return m;
 			}
@@ -91,36 +95,36 @@ public class CustomEntityHelper {
 			}
 		return equal;
 	}
-	
-	public static void setDamageable(Object entity){
-		try{
+
+	public static void setDamageable(Object entity) {
+		try {
 			Class<?> entityc = getNMSClass("Entity");
 			Field f = entityc.getDeclaredField("invulnerable");
 			f.setAccessible(true);
-			f.set(entity, false);	
-		}catch(Exception e){
+			f.set(entity, false);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void setUndamageable(Object entity){
-		try{
+
+	public static void setUndamageable(Object entity) {
+		try {
 			Class<?> entityc = getNMSClass("Entity");
 			Field f = entityc.getDeclaredField("invulnerable");
 			f.setAccessible(true);
 			f.set(entity, true);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static boolean getDamageable(Object entity){
-		try{
+
+	public static boolean getDamageable(Object entity) {
+		try {
 			Class<?> entityc = getNMSClass("Entity");
 			Field f = entityc.getDeclaredField("invulnerable");
 			f.setAccessible(true);
-			return (boolean)f.get(entity);
-		}catch(Exception e){
+			return (boolean) f.get(entity);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return true;
 		}

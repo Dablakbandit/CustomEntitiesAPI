@@ -12,33 +12,34 @@ import ja.CtField;
 import ja.CtNewMethod;
 import ja.LoaderClassPath;
 
-public class CustomEntitySheep extends CustomEntityAnimal{
+public class CustomEntitySheep extends CustomEntityAnimal {
 
-	public CustomEntitySheep(){
+	public CustomEntitySheep() {
 		super("CustomEntitySheep");
-		if(ctClass==null)return;
+		if (ctClass == null)
+			return;
 		register();
 	}
 
-	public CustomEntitySheep(Location location){
+	public CustomEntitySheep(Location location) {
 		this();
 		a();
 		spawnEntity(location);
 	}
 
-	public CustomEntitySheep(Entity e){
+	public CustomEntitySheep(Entity e) {
 		this();
 		a();
 		entity = NMSUtils.getHandle(e);
 	}
 
-	public CustomEntitySheep(Object o){
+	public CustomEntitySheep(Object o) {
 		this();
 		a();
 		entity = o;
 	}
 
-	public static Class<?> getCustomEntitySheepClass(){
+	public static Class<?> getCustomEntitySheepClass() {
 		try {
 			return Class.forName("temp.CustomEntitySheep");
 		} catch (Exception e) {
@@ -46,29 +47,45 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 		}
 	}
 
-	private void register(){
-		try{
+	private void register() {
+		try {
 			customentity = Class.forName("temp.CustomEntitySheep");
-		}catch(Exception e1){
+		} catch (Exception e1) {
 			try {
-				cp.appendClassPath(new LoaderClassPath(CustomEntitySheep.class.getClassLoader()));
-				CtClass ces = cp.getAndRename("me.dablakbandit.customentitiesapi.entities.CustomEntitySheepHelper", "temp.CustomEntitySheepHelper");
+				cp.appendClassPath(new LoaderClassPath(CustomEntitySheep.class
+						.getClassLoader()));
+				CtClass ces = cp
+						.getAndRename(
+								"me.dablakbandit.customentitiesapi.entities.CustomEntitySheepHelper",
+								"temp.CustomEntitySheepHelper");
 				ces.setSuperclass(cp.get("temp.CustomEntityAnimalHelper"));
 				ces.toClass();
-				CtClass entitysheep = cp.getCtClass("net.minecraft.server." + NMSUtils.getVersion() + "EntitySheep");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntitySheep");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityAgeable");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityTypes");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "World");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "InventoryCrafting");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "ContainerSheepBreed");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "CraftingManager");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "ItemStack");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "Items");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "Item");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EnumColor");
+				CtClass entitysheep = cp.getCtClass("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntitySheep");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntitySheep");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityAgeable");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityTypes");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "World");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "InventoryCrafting");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "ContainerSheepBreed");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "CraftingManager");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "ItemStack");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "Items");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "Item");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EnumColor");
 				cp.importPackage("temp");
-				for(CtField f : fields){
+				for (CtField f : fields) {
 					ctClass.addField(f);
 				}
 				fields.clear();
@@ -80,10 +97,10 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 						+ "CustomEntitySheepHelper.setAbleToMove(this, d);"
 						+ "}");
 				methods.add("public void setAbleToMove(){"
-						+ "CustomEntitySheepHelper.setAbleToMove(this);"
-						+ "}");
-				try{
-					Class.forName("net.minecraft.server." + NMSUtils.getVersion() + "Items");
+						+ "CustomEntitySheepHelper.setAbleToMove(this);" + "}");
+				try {
+					Class.forName("net.minecraft.server."
+							+ NMSUtils.getVersion() + "Items");
 					methods.add("public EntityAgeable createChild(EntityAgeable paramEntityAgeable){"
 							+ "CustomEntitySheep entitysheep = this;"
 							+ "CustomEntitySheep ces = (CustomEntitySheep)CustomEntitySheepHelper.createEntity(this.world, this.getClass(), getLocationX(), getLocationY(), getLocationZ(), getLocationYaw(), getLocationPitch());"
@@ -98,11 +115,8 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 							+ "k = itemstack.getData();"
 							+ "} else {"
 							+ "k = this.world.random.nextBoolean() ? i : j;"
-							+ "}"
-							+ "ces.setColor(15-k);"
-							+ "return ces;"
-							+ "}");
-				}catch(Exception e){
+							+ "}" + "ces.setColor(15-k);" + "return ces;" + "}");
+				} catch (Exception e) {
 					methods.add("public EntityAgeable createChild(EntityAgeable paramEntityAgeable){"
 							+ "CustomEntitySheep entitysheep = this;"
 							+ "CustomEntitySheep ces = (CustomEntitySheep)CustomEntitySheepHelper.createEntity(this.world, this.getClass(), getLocationX(), getLocationY(), getLocationZ(), getLocationYaw(), getLocationPitch());"
@@ -117,83 +131,70 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 							+ "k = itemstack.getData();"
 							+ "} else {"
 							+ "k = this.world.random.nextBoolean() ? i : j;"
-							+ "}"
-							+ "ces.setColor(15-k);"
-							+ "return ces;"
-							+ "}");
+							+ "}" + "ces.setColor(15-k);" + "return ces;" + "}");
 				}
-				for(String m : methods){
+				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
 				methods.clear();
 				customentity = ctClass.toClass();
-			}catch (Exception e2) {
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
-		if(customentity!=null)CustomEntitiesAPI.getInstance().registerEntity("EntitySheep", 91, customentity);
+		if (customentity != null)
+			CustomEntitiesAPI.getInstance().registerEntity("EntitySheep", 91,
+					customentity);
 	}
 
-	public void a(){
-		try{
+	public void a() {
+		try {
 			customentity = Class.forName("temp.CustomEntitySheep");
 			helper = Class.forName("temp.CustomEntitySheepHelper");
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	public void setGoalSelectorDefaultPathfinderGoals(){
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals", Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalPanicDefault(){
+	public void setGoalSelectorDefaultPathfinderGoals() {
+		try {
+			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
+					Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void newGoalSelectorPathfinderGoalPanicDefault() {
 		newGoalSelectorPathfinderGoalPanic(1.25D);
 	}
 
-	public void newGoalSelectorPathfinderGoalBreedDefault(){
+	public void newGoalSelectorPathfinderGoalBreedDefault() {
 		newGoalSelectorPathfinderGoalBreed(1.25D);
 	}
 
-	public void newGoalSelectorPathfinderGoalTemptDefault(){
+	public void newGoalSelectorPathfinderGoalTemptDefault() {
 		newGoalSelectorPathfinderGoalTempt(1.1D, "WHEAT", false);
 	}
 
-	public void newGoalSelectorPathfinderGoalFollowParentDefault(){
+	public void newGoalSelectorPathfinderGoalFollowParentDefault() {
 		newGoalSelectorPathfinderGoalFollowParent(1.25D);
 	}
 
-	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault() {
 		newGoalSelectorPathfinderGoalRandomStroll(1.25D);
 	}
 
-	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault() {
 		newGoalSelectorPathfinderGoalLookAtPlayer(6.0F, 0.02F);
 	}
 
-	public void spawnEntity(Location location){
-		if(entity!=null)return;
-		try {
-			Object o = NMSUtils.getHandle(location.getWorld());
-			Object newsheep = helper.getMethod("createEntity", Object.class, Class.class, double.class, double.class, double.class, float.class, float.class)
-					.invoke(null, o, customentity, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-			o.getClass().getMethod("addEntity", NMSUtils.getNMSClass("Entity")).invoke(o, newsheep);
-			entity = newsheep;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Deprecated
-	public Object getCustomEntitySheep(){
-		return this.entity!=null ? this.entity : null;
+	public Object getCustomEntitySheep() {
+		return this.entity != null ? this.entity : null;
 	}
 
-	public int getColor(){
+	public int getColor() {
 		try {
 			return (int) entity.getClass().getMethod("getColor").invoke(entity);
 		} catch (Exception e) {
@@ -203,21 +204,23 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 	}
 
 	@SuppressWarnings("deprecation")
-	public DyeColor getDyeColor(){
-		return DyeColor.getByWoolData((byte)getColor());
+	public DyeColor getDyeColor() {
+		return DyeColor.getByWoolData((byte) getColor());
 	}
 
-	public void setColor(int i){
+	public void setColor(int i) {
 		try {
-			entity.getClass().getMethod("setColor", int.class).invoke(entity, i);
+			entity.getClass().getMethod("setColor", int.class)
+					.invoke(entity, i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void setSheared(boolean flag){
+	public void setSheared(boolean flag) {
 		try {
-			entity.getClass().getMethod("setSheared", boolean.class).invoke(entity, flag);
+			entity.getClass().getMethod("setSheared", boolean.class)
+					.invoke(entity, flag);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

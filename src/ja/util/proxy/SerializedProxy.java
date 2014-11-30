@@ -24,76 +24,78 @@ import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
 
 /**
- * A proxy object is converted into an instance of this class
- * when it is written to an output stream.
- *
+ * A proxy object is converted into an instance of this class when it is written
+ * to an output stream.
+ * 
  * @see RuntimeSupport#makeSerializedProxy(Object)
  */
 class SerializedProxy implements Serializable {
-    private String superClass;
-    private String[] interfaces;
-    private byte[] filterSignature;
-    private MethodHandler handler;
+	private String superClass;
+	private String[] interfaces;
+	private byte[] filterSignature;
+	private MethodHandler handler;
 
-    SerializedProxy(Class proxy, byte[] sig, MethodHandler h) {
-        filterSignature = sig;
-        handler = h;
-        superClass = proxy.getSuperclass().getName();
-        Class[] infs = proxy.getInterfaces();
-        int n = infs.length;
-        interfaces = new String[n - 1];
-        String setterInf = ProxyObject.class.getName();
-        String setterInf2 = Proxy.class.getName();
-        for (int i = 0; i < n; i++) {
-            String name = infs[i].getName();
-            if (!name.equals(setterInf) && !name.equals(setterInf2))
-                interfaces[i] = name;
-        }
-    }
+	SerializedProxy(Class proxy, byte[] sig, MethodHandler h) {
+		filterSignature = sig;
+		handler = h;
+		superClass = proxy.getSuperclass().getName();
+		Class[] infs = proxy.getInterfaces();
+		int n = infs.length;
+		interfaces = new String[n - 1];
+		String setterInf = ProxyObject.class.getName();
+		String setterInf2 = Proxy.class.getName();
+		for (int i = 0; i < n; i++) {
+			String name = infs[i].getName();
+			if (!name.equals(setterInf) && !name.equals(setterInf2))
+				interfaces[i] = name;
+		}
+	}
 
-    /**
-     * Load class.
-     *
-     * @param className the class name
-     * @return loaded class
-     * @throws ClassNotFoundException for any error
-     */
-    protected Class loadClass(final String className) throws ClassNotFoundException {
-        try {
-            return (Class)AccessController.doPrivileged(new PrivilegedExceptionAction(){
-                public Object run() throws Exception{
-                    ClassLoader cl = Thread.currentThread().getContextClassLoader();
-                    return Class.forName(className, true, cl);
-                }
-            });
-        }
-        catch (PrivilegedActionException pae) {
-            throw new RuntimeException("cannot load the class: " + className, pae.getException());
-        }
-    }
+	/**
+	 * Load class.
+	 * 
+	 * @param className
+	 *            the class name
+	 * @return loaded class
+	 * @throws ClassNotFoundException
+	 *             for any error
+	 */
+	protected Class loadClass(final String className)
+			throws ClassNotFoundException {
+		try {
+			return (Class) AccessController
+					.doPrivileged(new PrivilegedExceptionAction() {
+						public Object run() throws Exception {
+							ClassLoader cl = Thread.currentThread()
+									.getContextClassLoader();
+							return Class.forName(className, true, cl);
+						}
+					});
+		} catch (PrivilegedActionException pae) {
+			throw new RuntimeException("cannot load the class: " + className,
+					pae.getException());
+		}
+	}
 
-    Object readResolve() throws ObjectStreamException {
-        try {
-            int n = interfaces.length;
-            Class[] infs = new Class[n];
-            for (int i = 0; i < n; i++)
-                infs[i] = loadClass(interfaces[i]);
+	Object readResolve() throws ObjectStreamException {
+		try {
+			int n = interfaces.length;
+			Class[] infs = new Class[n];
+			for (int i = 0; i < n; i++)
+				infs[i] = loadClass(interfaces[i]);
 
-            ProxyFactory f = new ProxyFactory();
-            f.setSuperclass(loadClass(superClass));
-            f.setInterfaces(infs);
-            Proxy proxy = (Proxy)f.createClass(filterSignature).newInstance();
-            proxy.setHandler(handler);
-            return proxy;
-        }
-        catch (ClassNotFoundException e) {
-            throw new java.io.InvalidClassException(e.getMessage());
-        }
-        catch (InstantiationException e2) {
-            throw new java.io.InvalidObjectException(e2.getMessage());
-        }
-        catch (IllegalAccessException e3) {
-            throw new java.io.InvalidClassException(e3.getMessage());
-        }
-    }
+			ProxyFactory f = new ProxyFactory();
+			f.setSuperclass(loadClass(superClass));
+			f.setInterfaces(infs);
+			Proxy proxy = (Proxy) f.createClass(filterSignature).newInstance();
+			proxy.setHandler(handler);
+			return proxy;
+		} catch (ClassNotFoundException e) {
+			throw new java.io.InvalidClassException(e.getMessage());
+		} catch (InstantiationException e2) {
+			throw new java.io.InvalidObjectException(e2.getMessage());
+		} catch (IllegalAccessException e3) {
+			throw new java.io.InvalidClassException(e3.getMessage());
+		}
+	}
 }

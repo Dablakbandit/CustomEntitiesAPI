@@ -1,23 +1,22 @@
 package me.dablakbandit.customentitiesapi.entities;
 
-
 import java.lang.reflect.Field;
 
-public class CustomEntitySheepHelper extends CustomEntityAnimalHelper{
+public class CustomEntitySheepHelper extends CustomEntityAnimalHelper {
 
-	public static void setUnableToMove(Object sheep){
+	public static void setUnableToMove(Object sheep) {
 		removeGoalSelectorPathfinderGoalAll(sheep);
 	}
-	
-	public static void setAbleToMove(Object sheep){
+
+	public static void setAbleToMove(Object sheep) {
 		newGoalSelectorPathfinderGoalRandomStroll(sheep, 1D);
 	}
 
-	public static void setAbleToMove(Object sheep, double d){
+	public static void setAbleToMove(Object sheep, double d) {
 		newGoalSelectorPathfinderGoalRandomStroll(sheep, d);
 	}
-	
-	public static void setGoalSelectorDefaultPathfinderGoals(Object sheep){
+
+	public static void setGoalSelectorDefaultPathfinderGoals(Object sheep) {
 		removeGoalSelectorPathfinderGoalAll(sheep);
 		newGoalSelectorPathfinderGoalFloat(sheep);
 		newGoalSelectorPathfinderGoalPanic(sheep, 1.25D);
@@ -30,7 +29,7 @@ public class CustomEntitySheepHelper extends CustomEntityAnimalHelper{
 		newGoalSelectorPathfinderGoalRandomLookaround(sheep);
 	}
 
-	public static Object getInventoryCrafting(Object sheep){
+	public static Object getInventoryCrafting(Object sheep) {
 		try {
 			Field f = getNMSClass("EntitySheep").getDeclaredField("bq");
 			f.setAccessible(true);
@@ -41,5 +40,5 @@ public class CustomEntitySheepHelper extends CustomEntityAnimalHelper{
 			return null;
 		}
 	}
-	
+
 }

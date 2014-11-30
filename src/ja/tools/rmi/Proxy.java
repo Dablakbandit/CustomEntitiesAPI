@@ -18,9 +18,9 @@ package ja.tools.rmi;
 
 /**
  * An interface implemented by proxy classes.
- *
+ * 
  * @see ja.tools.rmi.StubGenerator
  */
 public interface Proxy {
-    int _getObjectId();
+	int _getObjectId();
 }

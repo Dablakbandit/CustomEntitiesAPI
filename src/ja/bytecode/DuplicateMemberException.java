@@ -20,12 +20,12 @@ import ja.CannotCompileException;
 
 /**
  * An exception thrown when adding a duplicate member is requested.
- *
+ * 
  * @see ClassFile#addMethod(MethodInfo)
  * @see ClassFile#addField(FieldInfo)
  */
 public class DuplicateMemberException extends CannotCompileException {
-    public DuplicateMemberException(String msg) {
-        super(msg);
-    }
+	public DuplicateMemberException(String msg) {
+		super(msg);
+	}
 }

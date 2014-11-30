@@ -12,15 +12,16 @@ import me.dablakbandit.customentitiesapi.NMSUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
-public class CustomEntityZombie extends CustomEntityMonster{
+public class CustomEntityZombie extends CustomEntityMonster {
 
-	public CustomEntityZombie(){
+	public CustomEntityZombie() {
 		super("CustomEntityZombie");
-		if(ctClass==null)return;
+		if (ctClass == null)
+			return;
 		register();
 	}
 
-	public CustomEntityZombie(Location location){
+	public CustomEntityZombie(Location location) {
 		this();
 		a();
 		spawnEntity(location);
@@ -28,19 +29,19 @@ public class CustomEntityZombie extends CustomEntityMonster{
 		newGoalSelectorPathfinderGoalMeleeAttackDefault();
 	}
 
-	public CustomEntityZombie(Entity e){
+	public CustomEntityZombie(Entity e) {
 		this();
 		a();
 		entity = NMSUtils.getHandle(e);
 	}
-	
-	public CustomEntityZombie(Object o){
+
+	public CustomEntityZombie(Object o) {
 		this();
 		a();
 		entity = o;
 	}
 
-	public static Class<?> getCustomEntityZombieClass(){
+	public static Class<?> getCustomEntityZombieClass() {
 		try {
 			return Class.forName("temp.CustomEntityZombie");
 		} catch (Exception e) {
@@ -48,20 +49,27 @@ public class CustomEntityZombie extends CustomEntityMonster{
 		}
 	}
 
-	private void register(){
-		try{
+	private void register() {
+		try {
 			customentity = Class.forName("temp.CustomEntityZombie");
-		}catch(Exception e1){
+		} catch (Exception e1) {
 			try {
-				cp.appendClassPath(new LoaderClassPath(CustomEntityZombie.class.getClassLoader()));
-				CtClass ces = cp.getAndRename("me.dablakbandit.customentitiesapi.entities.CustomEntityZombieHelper", "temp.CustomEntityZombieHelper");
+				cp.appendClassPath(new LoaderClassPath(CustomEntityZombie.class
+						.getClassLoader()));
+				CtClass ces = cp
+						.getAndRename(
+								"me.dablakbandit.customentitiesapi.entities.CustomEntityZombieHelper",
+								"temp.CustomEntityZombieHelper");
 				ces.setSuperclass(cp.get("temp.CustomEntityMonsterHelper"));
 				ces.toClass();
-				CtClass EntityZombie = cp.getCtClass("net.minecraft.server." + NMSUtils.getVersion() + "EntityZombie");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityZombie");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityLiving");
+				CtClass EntityZombie = cp.getCtClass("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityZombie");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityZombie");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityLiving");
 				cp.importPackage("temp");
-				for(CtField f : fields){
+				for (CtField f : fields) {
 					ctClass.addField(f);
 				}
 				fields.clear();
@@ -70,64 +78,55 @@ public class CustomEntityZombie extends CustomEntityMonster{
 						+ "CustomEntityZombieHelper.setUnableToMove(this);"
 						+ "}");
 				methods.add("public void setAbleToMove(){"
-						+ "CustomEntityZombieHelper.setAbleToMove(this);"
-						+ "}");
+						+ "CustomEntityZombieHelper.setAbleToMove(this);" + "}");
 
 				methods.add("public void setAbleToMove(double d){"
 						+ "CustomEntityZombieHelper.setAbleToMove(this, d);"
 						+ "}");
-				for(String m : methods){
+				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
 				methods.clear();
 				customentity = ctClass.toClass();
-			}catch (Exception e2) {
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
-		if(customentity!=null)CustomEntitiesAPI.getInstance().registerEntity("EntityZombie", 54, customentity);
+		if (customentity != null)
+			CustomEntitiesAPI.getInstance().registerEntity("EntityZombie", 54,
+					customentity);
 	}
 
-	public void a(){
-		try{
+	public void a() {
+		try {
 			customentity = Class.forName("temp.CustomEntityZombie");
 			helper = Class.forName("temp.CustomEntityZombieHelper");
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-	public void spawnEntity(Location location){
-		if(entity!=null)return;
-		try {
-			Object o = NMSUtils.getHandle(location.getWorld());
-			Object newzombie = helper.getMethod("createEntity", Object.class, Class.class, double.class, double.class, double.class, float.class, float.class)
-					.invoke(null, o, customentity, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-			o.getClass().getMethod("addEntity", NMSUtils.getNMSClass("Entity")).invoke(o, newzombie);
-			entity = newzombie;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void setGoalSelectorDefaultPathfinderGoals(){
+	public void setGoalSelectorDefaultPathfinderGoals() {
 		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals", Object.class).invoke(null, entity);
+			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalMeleeAttackDefault(){
-		try{
-			try{
+	public void newGoalSelectorPathfinderGoalMeleeAttackDefault() {
+		try {
+			try {
 				Field f = entity.getClass().getField("world");
 				Object world = f.get(entity);
-				Field config = world.getClass().getDeclaredField("spigotConfig");
+				Field config = world.getClass()
+						.getDeclaredField("spigotConfig");
 				Object config1 = config.get(world);
-				Field f1 = config1.getClass().getField("zombieAggressiveTowardsVillager");
+				Field f1 = config1.getClass().getField(
+						"zombieAggressiveTowardsVillager");
 				Object value = f1.get(config1);
-				if((boolean)value){
+				if ((boolean) value) {
 					newGoalSelectorPathfinderGoalMeleeAttack(1.0D, true);
 				}
 			} catch (Exception e) {
@@ -138,34 +137,36 @@ public class CustomEntityZombie extends CustomEntityMonster{
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalMoveTowardsRestrictionDefault(){
+	public void newGoalSelectorPathfinderGoalMoveTowardsRestrictionDefault() {
 		newGoalSelectorPathfinderGoalMoveTowardsRestriction(1.0D);
 	}
 
-	public void newGoalSelectorPathfinderGoalMoveThroughVillageDefault(){
+	public void newGoalSelectorPathfinderGoalMoveThroughVillageDefault() {
 		newGoalSelectorPathfinderGoalMoveThroughVillage(1.0D, false);
 	}
 
-	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault() {
 		newGoalSelectorPathfinderGoalRandomStroll(1.0D);
 	}
 
-	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault() {
 		newGoalSelectorPathfinderGoalLookAtPlayer(8.0F);
 	}
 
-	public boolean isVillager(){
+	public boolean isVillager() {
 		try {
-			return (boolean)entity.getClass().getMethod("isVillager").invoke(entity);
+			return (boolean) entity.getClass().getMethod("isVillager")
+					.invoke(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public void setBaby(boolean flag){
+	public void setBaby(boolean flag) {
 		try {
-			entity.getClass().getMethod("setBaby", boolean.class).invoke(entity, flag);
+			entity.getClass().getMethod("setBaby", boolean.class)
+					.invoke(entity, flag);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -20,16 +20,20 @@ package ja.tools.web;
  * Thrown when receiving an invalid HTTP request.
  */
 public class BadHttpRequest extends Exception {
-    private Exception e;
+	private Exception e;
 
-    public BadHttpRequest() { e = null; }
+	public BadHttpRequest() {
+		e = null;
+	}
 
-    public BadHttpRequest(Exception _e) { e = _e; }
+	public BadHttpRequest(Exception _e) {
+		e = _e;
+	}
 
-    public String toString() {
-        if (e == null)
-            return super.toString();
-        else
-            return e.toString();
-    }
+	public String toString() {
+		if (e == null)
+			return super.toString();
+		else
+			return e.toString();
+	}
 }

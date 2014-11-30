@@ -13,37 +13,38 @@ import me.dablakbandit.customentitiesapi.NMSUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
-public class CustomEntityVillager extends CustomEntityAgeable{
+public class CustomEntityVillager extends CustomEntityAgeable {
 
-	public CustomEntityVillager(){
+	public CustomEntityVillager() {
 		super("CustomEntityVillager");
-		if(ctClass==null)return;
+		if (ctClass == null)
+			return;
 		register();
 	}
 
-	public CustomEntityVillager(Location location){
+	public CustomEntityVillager(Location location) {
 		this();
 		a();
 		spawnEntity(location);
 	}
 
-	public CustomEntityVillager(Entity e){
+	public CustomEntityVillager(Entity e) {
 		this();
 		a();
-		try{
+		try {
 			entity = customentity.cast(NMSUtils.getHandle(e));
-		}catch(Exception e1){
+		} catch (Exception e1) {
 
 		}
 	}
 
-	public CustomEntityVillager(Object o){
+	public CustomEntityVillager(Object o) {
 		this();
 		a();
 		entity = o;
 	}
 
-	public static Class<?> getCustomEntityVillagerClass(){
+	public static Class<?> getCustomEntityVillagerClass() {
 		try {
 			return Class.forName("temp.CustomEntityVillager");
 		} catch (Exception e) {
@@ -51,67 +52,66 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 		}
 	}
 
-	public void a(){
-		try{
+	public void a() {
+		try {
 			customentity = Class.forName("temp.CustomEntityVillager");
 			helper = Class.forName("temp.CustomEntityVillagerHelper");
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void register(){
-		try{
+	private void register() {
+		try {
 			customentity = Class.forName("temp.CustomEntityVillager");
-		}catch(Exception e1){
+		} catch (Exception e1) {
 			try {
-				cp.appendClassPath(new LoaderClassPath(CustomEntityVillager.class.getClassLoader()));
-				CtClass ces = cp.getAndRename("me.dablakbandit.customentitiesapi.entities.CustomEntityVillagerHelper", "temp.CustomEntityVillagerHelper");
+				cp.appendClassPath(new LoaderClassPath(
+						CustomEntityVillager.class.getClassLoader()));
+				CtClass ces = cp
+						.getAndRename(
+								"me.dablakbandit.customentitiesapi.entities.CustomEntityVillagerHelper",
+								"temp.CustomEntityVillagerHelper");
 				ces.setSuperclass(cp.get("temp.CustomEntityAgeableHelper"));
 				ces.toClass();
-				CtClass EntityVillager = cp.getCtClass("net.minecraft.server." + NMSUtils.getVersion() + "EntityVillager");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityVillager");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityLiving");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "ItemStack");
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityHuman");
+				CtClass EntityVillager = cp.getCtClass("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityVillager");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityVillager");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityLiving");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "ItemStack");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "EntityHuman");
 				cp.importPackage("temp");
-				fields.add(new CtField(CtClass.booleanType, "tradeable", ctClass));
-				for(CtField f : fields){
+				fields.add(new CtField(CtClass.booleanType, "tradeable",
+						ctClass));
+				for (CtField f : fields) {
 					ctClass.addField(f);
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntityVillager);
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "NBTTagCompound");
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "NBTTagCompound");
 				methods.remove("public void b(NBTTagCompound nbt){"
 						+ "super.a(nbt);"
-						+ "nbt.setBoolean(\"pushable\", this.pushable);"
-						+ "}");
+						+ "nbt.setBoolean(\"pushable\", this.pushable);" + "}");
 				methods.remove("public void a(NBTTagCompound nbt){"
-						+ "super.a(nbt);"
-						+ "if(nbt.hasKey(\"pushable\")){"
+						+ "super.a(nbt);" + "if(nbt.hasKey(\"pushable\")){"
 						+ "this.pushable = nbt.getBoolean(\"pushable\");"
-						+ "}else{"
-						+ "this.pushable = true;"
-						+ "}"
-						+ "}");
+						+ "}else{" + "this.pushable = true;" + "}" + "}");
 				methods.add("public void b(NBTTagCompound nbt){"
 						+ "super.a(nbt);"
 						+ "nbt.setBoolean(\"tradeable\", this.tradeable);"
-						+ "nbt.setBoolean(\"pushable\", this.pushable);"
-						+ "}");
+						+ "nbt.setBoolean(\"pushable\", this.pushable);" + "}");
 				methods.add("public void a(NBTTagCompound nbt){"
-						+ "super.a(nbt);"
-						+ "if(nbt.hasKey(\"tradeable\")){"
+						+ "super.a(nbt);" + "if(nbt.hasKey(\"tradeable\")){"
 						+ "this.tradeable= nbt.getBoolean(\"tradeable\");"
-						+ "}else{"
-						+ "this.tradeable = true;"
-						+ "}"
+						+ "}else{" + "this.tradeable = true;" + "}"
 						+ "if(nbt.hasKey(\"pushable\")){"
 						+ "this.pushable = nbt.getBoolean(\"pushable\");"
-						+ "}else{"
-						+ "this.pushable = true;"
-						+ "}"
-						+ "}");
+						+ "}else{" + "this.pushable = true;" + "}" + "}");
 				methods.add("public void setUnableToMove(){"
 						+ "CustomEntityVillagerHelper.setUnableToMove(this);"
 						+ "}");
@@ -123,176 +123,192 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 						+ "}");
 				methods.add("public boolean a(EntityHuman paramEntityHuman){"
 						+ "if(!this.tradeable)return false;"
-						+ "return super.a(paramEntityHuman);"
-						+ "}");
-				for(String m : methods){
+						+ "return super.a(paramEntityHuman);" + "}");
+				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
-				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "World");
-				CtConstructor con = CtNewConstructor.make(new CtClass[]{cp.get("net.minecraft.server." + NMSUtils.getVersion() + "World"), CtPrimitiveType.intType}, null, ctClass);
+				cp.importPackage("net.minecraft.server."
+						+ NMSUtils.getVersion() + "World");
+				CtConstructor con = CtNewConstructor.make(
+						new CtClass[] {
+								cp.get("net.minecraft.server."
+										+ NMSUtils.getVersion() + "World"),
+								CtPrimitiveType.intType }, null, ctClass);
 				con.insertAfter("this.tradeable = true;");
 				ctClass.addConstructor(con);
-				con = CtNewConstructor.make(new CtClass[]{cp.get("net.minecraft.server." + NMSUtils.getVersion() + "World")}, null, ctClass);
+				con = CtNewConstructor.make(
+						new CtClass[] { cp.get("net.minecraft.server."
+								+ NMSUtils.getVersion() + "World") }, null,
+						ctClass);
 				ctClass.addConstructor(con);
 				con.insertAfter("this.tradeable = true;");
 				methods.clear();
-				ctClass.writeFile(CustomEntitiesAPI.getInstance().getDataFolder().getAbsolutePath());
+				ctClass.writeFile(CustomEntitiesAPI.getInstance()
+						.getDataFolder().getAbsolutePath());
 				customentity = ctClass.toClass();
-			}catch (Exception e2) {
+			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
-		if(customentity!=null)CustomEntitiesAPI.getInstance().registerEntity("EntityVillager", 120, customentity);
+		if (customentity != null)
+			CustomEntitiesAPI.getInstance().registerEntity("EntityVillager",
+					120, customentity);
 	}
 
-	public void spawnEntity(Location location){
-		if(entity!=null)return;
+	public void setGoalSelectorDefaultPathfinderGoals() {
 		try {
-			Object o = NMSUtils.getHandle(location.getWorld());
-			Object newvillager = helper.getMethod("createEntity", Object.class, Class.class, double.class, double.class, double.class, float.class, float.class)
-					.invoke(null, o, customentity, location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-			o.getClass().getMethod("addEntity", NMSUtils.getNMSClass("Entity")).invoke(o, newvillager);
-			entity = newvillager;
+			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void setGoalSelectorDefaultPathfinderGoals(){
+	public void newGoalSelectorPathfinderGoalAvoidPlayerDefault() {
+		newGoalSelectorPathfinderGoalAvoidPlayer(EntityName.ENTITYZOMBIE, 8.0F,
+				0.6D, 0.6D);
+	}
+
+	public void newGoalSelectorPathfinderGoalTradeWithPlayerDefault() {
 		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals", Object.class).invoke(null, entity);
+			helper.getMethod("newGoalSelectorPathfinderGoalTradeWithPlayer",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalAvoidPlayerDefault(){
-		newGoalSelectorPathfinderGoalAvoidPlayer(EntityName.ENTITYZOMBIE, 8.0F, 0.6D, 0.6D);
-	}
-
-	public void newGoalSelectorPathfinderGoalTradeWithPlayerDefault(){
+	public void removeGoalSelectorPathfinderGoalTradeWithPlayer() {
 		try {
-			helper.getMethod("newGoalSelectorPathfinderGoalTradeWithPlayer", Object.class).invoke(null, entity);
+			helper.getMethod("removeGoalSelectorPathfinderGoalTradeWithPlayer",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void removeGoalSelectorPathfinderGoalTradeWithPlayer(){
+	public void newGoalSelectorPathfinderGoalLookAtTradingPlayerDefault() {
 		try {
-			helper.getMethod("removeGoalSelectorPathfinderGoalTradeWithPlayer", Object.class).invoke(null, entity);
+			helper.getMethod(
+					"newGoalSelectorPathfinderGoalLookAtTradingPlayer",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalLookAtTradingPlayerDefault(){
+	public void removeGoalSelectorPathfinderGoalLookAtTradingPlayer() {
 		try {
-			helper.getMethod("newGoalSelectorPathfinderGoalLookAtTradingPlayer", Object.class).invoke(null, entity);
+			helper.getMethod(
+					"removeGoalSelectorPathfinderGoalLookAtTradingPlayer",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void removeGoalSelectorPathfinderGoalLookAtTradingPlayer(){
-		try {
-			helper.getMethod("removeGoalSelectorPathfinderGoalLookAtTradingPlayer", Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void newGoalSelectorPathfinderGoalOpenDoorDefault(){
+	public void newGoalSelectorPathfinderGoalOpenDoorDefault() {
 		newGoalSelectorPathfinderGoalOpenDoor(true);
 	}
 
-	public void newGoalSelectorPathfinderGoalMoveTowardsRestrictionDefault(){
+	public void newGoalSelectorPathfinderGoalMoveTowardsRestrictionDefault() {
 		newGoalSelectorPathfinderGoalMoveTowardsRestriction(0.6D);
 	}
 
-	public void newGoalSelectorPathfinderGoalMakeLoveDefault(){
+	public void newGoalSelectorPathfinderGoalMakeLoveDefault() {
 		try {
-			helper.getMethod("newGoalSelectorPathfinderGoalMakeLove", Object.class).invoke(null, entity);
+			helper.getMethod("newGoalSelectorPathfinderGoalMakeLove",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void removeGoalSelectorPathfinderGoalMakeLove(){
+	public void removeGoalSelectorPathfinderGoalMakeLove() {
 		try {
-			helper.getMethod("removeGoalSelectorPathfinderGoalMakeLove", Object.class).invoke(null, entity);
+			helper.getMethod("removeGoalSelectorPathfinderGoalMakeLove",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalTakeFlowerDefault(){
+	public void newGoalSelectorPathfinderGoalTakeFlowerDefault() {
 		try {
-			helper.getMethod("newGoalSelectorPathfinderGoalTakeFlower", Object.class).invoke(null, entity);
+			helper.getMethod("newGoalSelectorPathfinderGoalTakeFlower",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void removeGoalSelectorPathfinderGoalTakeFlower(){
+	public void removeGoalSelectorPathfinderGoalTakeFlower() {
 		try {
-			helper.getMethod("removeGoalSelectorPathfinderGoalTakeFlower", Object.class).invoke(null, entity);
+			helper.getMethod("removeGoalSelectorPathfinderGoalTakeFlower",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalPlay(double d){
+	public void newGoalSelectorPathfinderGoalPlay(double d) {
 		try {
-			helper.getMethod("newGoalSelectorPathfinderGoalPlay", Object.class, double.class).invoke(null, entity, d);
+			helper.getMethod("newGoalSelectorPathfinderGoalPlay", Object.class,
+					double.class).invoke(null, entity, d);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalPlayDefault(){
+	public void newGoalSelectorPathfinderGoalPlayDefault() {
 		newGoalSelectorPathfinderGoalPlay(0.32D);
 	}
 
-	public void removeGoalSelectorPathfinderGoalPlay(){
+	public void removeGoalSelectorPathfinderGoalPlay() {
 		try {
-			helper.getMethod("removeGoalSelectorPathfinderGoalPlay", Object.class).invoke(null, entity);
+			helper.getMethod("removeGoalSelectorPathfinderGoalPlay",
+					Object.class).invoke(null, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void newGoalSelectorPathfinderGoalInteractDefault(){
-		newGoalSelectorPathfinderGoalInteract(EntityName.ENTITYHUMAN, 3.0F, 1.0F);
-		newGoalSelectorPathfinderGoalInteract(EntityName.ENTITYVILLAGER, 5.0F, 0.2F);
+	public void newGoalSelectorPathfinderGoalInteractDefault() {
+		newGoalSelectorPathfinderGoalInteract(EntityName.ENTITYHUMAN, 3.0F,
+				1.0F);
+		newGoalSelectorPathfinderGoalInteract(EntityName.ENTITYVILLAGER, 5.0F,
+				0.2F);
 	}
 
-	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault() {
 		newGoalSelectorPathfinderGoalRandomStroll(0.6D);
 	}
 
-	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
-		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYINSENTIENT, 8.0F);
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault() {
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYINSENTIENT,
+				8.0F);
 	}
 
-	public int getProfession(){
+	public int getProfession() {
 		try {
-			return (int) entity.getClass().getMethod("getProfession").invoke(entity);
+			return (int) entity.getClass().getMethod("getProfession")
+					.invoke(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
 	}
 
-	public void setProfession(int i){
+	public void setProfession(int i) {
 		try {
-			entity.getClass().getMethod("setProfession", int.class).invoke(entity, i);
+			entity.getClass().getMethod("setProfession", int.class)
+					.invoke(entity, i);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public final void setTradeable(){
+	public final void setTradeable() {
 		try {
 			helper.getMethod("setTradeable", Object.class).invoke(null, entity);
 		} catch (Exception e) {
@@ -300,26 +316,27 @@ public class CustomEntityVillager extends CustomEntityAgeable{
 		}
 	}
 
-	public final void setTradeable(boolean value){
-		if(value){
+	public final void setTradeable(boolean value) {
+		if (value) {
 			setTradeable();
-		}else{
+		} else {
 			setUntradeable();
 		}
 	}
 
-	public final void setUntradeable(){
+	public final void setUntradeable() {
 		try {
-			helper.getMethod("setUntradeable", Object.class).invoke(null, entity);
+			helper.getMethod("setUntradeable", Object.class).invoke(null,
+					entity);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public final void setUntradeable(boolean value){
-		if(value){
+	public final void setUntradeable(boolean value) {
+		if (value) {
 			setUntradeable();
-		}else{
+		} else {
 			setTradeable();
 		}
 	}

@@ -17,23 +17,22 @@
 package ja.tools.reflect;
 
 /**
- * An interface to access a metaobject and a class metaobject.
- * This interface is implicitly implemented by the reflective
- * class.
+ * An interface to access a metaobject and a class metaobject. This interface is
+ * implicitly implemented by the reflective class.
  */
 public interface Metalevel {
-    /**
-     * Obtains the class metaobject associated with this object.
-     */
-    ClassMetaobject _getClass();
+	/**
+	 * Obtains the class metaobject associated with this object.
+	 */
+	ClassMetaobject _getClass();
 
-    /**
-     * Obtains the metaobject associated with this object.
-     */
-    Metaobject _getMetaobject();
+	/**
+	 * Obtains the metaobject associated with this object.
+	 */
+	Metaobject _getMetaobject();
 
-    /**
-     * Changes the metaobject associated with this object.
-     */
-    void _setMetaobject(Metaobject m);
+	/**
+	 * Changes the metaobject associated with this object.
+	 */
+	void _setMetaobject(Metaobject m);
 }

@@ -17,28 +17,25 @@
 package ja.util.proxy;
 
 /**
- * The interface implemented by proxy classes.
- * This interface is available only if the super class of the proxy object
- * does not have a <code>getHandler()</code> method.  If the super class
- * has <code>getHandler</code>, then <code>Proxy</code> interface is
- * available.  
- *
+ * The interface implemented by proxy classes. This interface is available only
+ * if the super class of the proxy object does not have a
+ * <code>getHandler()</code> method. If the super class has
+ * <code>getHandler</code>, then <code>Proxy</code> interface is available.
+ * 
  * @see ProxyFactory
  * @see Proxy
  */
 public interface ProxyObject extends Proxy {
-    /**
-     * Sets a handler.  It can be used for changing handlers
-     * during runtime.
-     */
-    void setHandler(MethodHandler mi);
+	/**
+	 * Sets a handler. It can be used for changing handlers during runtime.
+	 */
+	void setHandler(MethodHandler mi);
 
-    /**
-     * Get the handler.
-     * This can be used to access the underlying MethodHandler
-     * or to serialize it properly.
-     *
-     * @see ProxyFactory#getHandler(Proxy)
-     */
-    MethodHandler getHandler();
+	/**
+	 * Get the handler. This can be used to access the underlying MethodHandler
+	 * or to serialize it properly.
+	 * 
+	 * @see ProxyFactory#getHandler(Proxy)
+	 */
+	MethodHandler getHandler();
 }

@@ -17,37 +17,54 @@
 package ja.runtime;
 
 /**
- * A support class for implementing <code>$cflow</code>.
- * This support class is required at runtime
- * only if <code>$cflow</code> is used.
- *
+ * A support class for implementing <code>$cflow</code>. This support class is
+ * required at runtime only if <code>$cflow</code> is used.
+ * 
  * @see ja.CtBehavior#useCflow(String)
  */
 public class Cflow extends ThreadLocal {
-    private static class Depth {
-        private int depth;
-        Depth() { depth = 0; }
-        int get() { return depth; }
-        void inc() { ++depth; }
-        void dec() { --depth; }
-    }
+	private static class Depth {
+		private int depth;
 
-    protected synchronized Object initialValue() {
-        return new Depth();
-    }
+		Depth() {
+			depth = 0;
+		}
 
-    /**
-     * Increments the counter.
-     */
-    public void enter() { ((Depth)get()).inc(); }
+		int get() {
+			return depth;
+		}
 
-    /**
-     * Decrements the counter.
-     */
-    public void exit() { ((Depth)get()).dec(); }
+		void inc() {
+			++depth;
+		}
 
-    /**
-     * Returns the value of the counter.
-     */
-    public int value() { return ((Depth)get()).get(); }
+		void dec() {
+			--depth;
+		}
+	}
+
+	protected synchronized Object initialValue() {
+		return new Depth();
+	}
+
+	/**
+	 * Increments the counter.
+	 */
+	public void enter() {
+		((Depth) get()).inc();
+	}
+
+	/**
+	 * Decrements the counter.
+	 */
+	public void exit() {
+		((Depth) get()).dec();
+	}
+
+	/**
+	 * Returns the value of the counter.
+	 */
+	public int value() {
+		return ((Depth) get()).get();
+	}
 }
