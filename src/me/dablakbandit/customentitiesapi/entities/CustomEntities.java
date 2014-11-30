@@ -635,7 +635,7 @@ public class CustomEntities {
 
 	/**
 	 * 
-	 * @param locationBukkit Location
+	 * @param location Bukkit Location
 	 * @return New instance of a CustomEntitySheep
 	 * @see CustomEntitySheep
 	 */
@@ -1213,7 +1213,7 @@ public class CustomEntities {
 
 	/**
 	 * 
-	 * @param eBukkit Entity
+	 * @param e Bukkit Entity
 	 * @return If the Entity is a Minecraft Entity
 	 */
 	public static boolean isNormalEntitySheep(Entity e) {
