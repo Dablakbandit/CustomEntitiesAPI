@@ -21,6 +21,11 @@ public class Commands implements CommandExecutor{
 			//Player player = (Player)s;
 			CustomEntityVillager cev = CustomEntities.getNewCustomEntityVillager(((Player)s).getLocation());
 			cev.setUntradeable();
+			cev.setUnableToMove();
+			cev.setUndamageable();
+			cev.setUnpushable();
+			cev.newGoalSelectorPathfinderGoalInteract(EntityName.ENTITYHUMAN, 3.0F, 1.0F);
+			s.sendMessage("" + cev.getIAttribute(CustomIAttribute.MAX_HEALTH));
 		}
 		return false;
 	}

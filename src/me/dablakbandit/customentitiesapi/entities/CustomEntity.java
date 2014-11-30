@@ -60,9 +60,7 @@ public abstract class CustomEntity {
 					+ "}");
 			methods.add("public void g(double d0, double d1, double d2){"
 					+ "if(!this.pushable){"
-					+ "this.motX += d0;"
-					+ "this.motY += d1;"
-					+ "this.motZ += d2;"
+					+ "super.g(d0, d1, d2);"
 					+ "}"
 					+ "}");
 			methods.add("public void setPushable(){"

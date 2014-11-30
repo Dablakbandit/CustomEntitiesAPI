@@ -97,5 +97,22 @@ public abstract class CustomEntityLiving extends CustomEntity{
 			e.printStackTrace();
 		}
 	}
+	
+	public void setIAttribute(CustomIAttribute ia, double value){
+		try{
+			helper.getMethod("setIAttribute", Object.class, String.class, double.class).invoke(null, entity, ia.name(), value);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public double getIAttribute(CustomIAttribute ia){
+		try{
+			return (double)helper.getMethod("getIAttribute", Object.class, String.class).invoke(null, entity, ia.name());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return 0D;
+	}
 
 }

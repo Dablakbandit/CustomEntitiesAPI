@@ -19,7 +19,7 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 		if(ctClass==null)return;
 		register();
 	}
-	
+
 	public CustomEntitySheep(Location location){
 		this();
 		a();
@@ -31,13 +31,13 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 		a();
 		entity = NMSUtils.getHandle(e);
 	}
-	
+
 	public CustomEntitySheep(Object o){
 		this();
 		a();
 		entity = o;
 	}
-	
+
 	public static Class<?> getCustomEntitySheepClass(){
 		try {
 			return Class.forName("temp.CustomEntitySheep");
@@ -45,16 +45,16 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 			return null;
 		}
 	}
-	
+
 	private void register(){
 		try{
 			customentity = Class.forName("temp.CustomEntitySheep");
 		}catch(Exception e1){
 			try {
 				cp.appendClassPath(new LoaderClassPath(CustomEntitySheep.class.getClassLoader()));
-		        CtClass ces = cp.getAndRename("me.dablakbandit.customentitiesapi.entities.CustomEntitySheepHelper", "temp.CustomEntitySheepHelper");
-		        ces.setSuperclass(cp.get("temp.CustomEntityAnimalHelper"));
-		        ces.toClass();
+				CtClass ces = cp.getAndRename("me.dablakbandit.customentitiesapi.entities.CustomEntitySheepHelper", "temp.CustomEntitySheepHelper");
+				ces.setSuperclass(cp.get("temp.CustomEntityAnimalHelper"));
+				ces.toClass();
 				CtClass entitysheep = cp.getCtClass("net.minecraft.server." + NMSUtils.getVersion() + "EntitySheep");
 				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntitySheep");
 				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EntityAgeable");
@@ -66,6 +66,7 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "ItemStack");
 				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "Items");
 				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "Item");
+				cp.importPackage("net.minecraft.server." + NMSUtils.getVersion() + "EnumColor");
 				cp.importPackage("temp");
 				for(CtField f : fields){
 					ctClass.addField(f);
@@ -141,7 +142,7 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setGoalSelectorDefaultPathfinderGoals(){
 		try {
 			helper.getMethod("setGoalSelectorDefaultPathfinderGoals", Object.class).invoke(null, entity);
@@ -149,27 +150,27 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalPanicDefault(){
 		newGoalSelectorPathfinderGoalPanic(1.25D);
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalBreedDefault(){
 		newGoalSelectorPathfinderGoalBreed(1.25D);
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalTemptDefault(){
 		newGoalSelectorPathfinderGoalTempt(1.1D, "WHEAT", false);
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalFollowParentDefault(){
 		newGoalSelectorPathfinderGoalFollowParent(1.25D);
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
 		newGoalSelectorPathfinderGoalRandomStroll(1.25D);
 	}
-	
+
 	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
 		newGoalSelectorPathfinderGoalLookAtPlayer(6.0F, 0.02F);
 	}
@@ -191,7 +192,7 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 	public Object getCustomEntitySheep(){
 		return this.entity!=null ? this.entity : null;
 	}
-	
+
 	public int getColor(){
 		try {
 			return (int) entity.getClass().getMethod("getColor").invoke(entity);
@@ -200,12 +201,12 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 			return 0;
 		}
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public DyeColor getDyeColor(){
 		return DyeColor.getByWoolData((byte)getColor());
 	}
-	
+
 	public void setColor(int i){
 		try {
 			entity.getClass().getMethod("setColor", int.class).invoke(entity, i);
@@ -213,7 +214,7 @@ public class CustomEntitySheep extends CustomEntityAnimal{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setSheared(boolean flag){
 		try {
 			entity.getClass().getMethod("setSheared", boolean.class).invoke(entity, flag);

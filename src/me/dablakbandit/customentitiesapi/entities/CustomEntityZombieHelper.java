@@ -35,7 +35,7 @@ public class CustomEntityZombieHelper extends CustomEntityMonsterHelper{
 		}
 		newGoalSelectorPathfinderGoalMoveTowardsRestriction(zombie, 1.0D);
 		newGoalSelectorPathfinderGoalMoveThroughVillage(zombie, 1.0D, true);
-		newGoalSelectorPathfinderGoalRandomStroll(zombie, 0);
+		newGoalSelectorPathfinderGoalRandomStroll(zombie, 1.0D);
 		newGoalSelectorPathfinderGoalLookAtPlayer(zombie, 8.0F);
 		newGoalSelectorPathfinderGoalRandomLookaround(zombie);
 	}
