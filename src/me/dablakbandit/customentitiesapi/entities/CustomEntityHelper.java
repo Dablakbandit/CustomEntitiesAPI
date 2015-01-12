@@ -129,4 +129,20 @@ public class CustomEntityHelper {
 			return true;
 		}
 	}
+	
+	public static void setUnableToMove(Object entity) {
+		
+	}
+
+	public static void setAbleToMove(Object entity) {
+
+	}
+
+	public static void setAbleToMove(Object entity, double d) {
+
+	}
+
+	public static void setGoalSelectorDefaultPathfinderGoals(Object entity){
+
+	}
 }

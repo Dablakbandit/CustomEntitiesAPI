@@ -108,4 +108,33 @@ public class CustomEntityPig extends CustomEntityAnimal {
 			e.printStackTrace();
 		}
 	}
+
+	public void newGoalSelectorPathfinderGoalPanicDefault(){
+		newGoalSelectorPathfinderGoalPanic(1.25D);
+	}
+
+	public void newGoalSelectorPathfinderGoalPassengerCarrotStickDefault(){
+		newGoalSelectorPathfinderGoalPassengerCarrotStick(0.3F);
+	}
+
+	public void newGoalSelectorPathfinderGoalBreedDefault(){
+		newGoalSelectorPathfinderGoalBreed(1.0D);
+	}
+
+	public void newGoalSelectorPathfinderGoalTemptDefault(){
+		newGoalSelectorPathfinderGoalTempt(1.2D, "Carrot_Stick", false);
+		newGoalSelectorPathfinderGoalTempt(1.2D, "Carrot", false);
+	}
+
+	public void newGoalSelectorPathfinderGoalFollowParentDefault(){
+		newGoalSelectorPathfinderGoalFollowParent(1.1D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 6.0F);
+	}
 }

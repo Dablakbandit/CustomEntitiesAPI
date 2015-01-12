@@ -86,6 +86,9 @@ public class CustomEntityCow extends CustomEntityAnimal {
 						+ "CustomEntityCowHelper.setAbleToMove(this);" + "}");
 				methods.add("public void setAbleToMove(double d){"
 						+ "CustomEntityCowHelper.setAbleToMove(this, d);" + "}");
+				methods.add("public EntityAgeable createChild(EntityAgeable entityageable){"
+						+ "return (EntityAgeable)CustomEntityCowHelper.createEntity(this.world, this.getClass(), getLocationX(), getLocationY(), getLocationZ(), getLocationYaw(), getLocationPitch());"
+						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -107,5 +110,29 @@ public class CustomEntityCow extends CustomEntityAnimal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void newGoalSelectorPathfinderGoalPanicDefault(){
+		newGoalSelectorPathfinderGoalPanic(2.0D);
+	}
+
+	public void newGoalSelectorPathfinderGoalBreedDefault(){
+		newGoalSelectorPathfinderGoalBreed(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalTemptDefault(){
+		newGoalSelectorPathfinderGoalTempt(1.25D, "WHEAT", false);
+	}
+	
+	public void newGoalSelectorPathfinderGoalFollowParentDefault(){
+		newGoalSelectorPathfinderGoalFollowParent(1.25D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 6.0F);
 	}
 }

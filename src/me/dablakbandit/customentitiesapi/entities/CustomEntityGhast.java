@@ -80,14 +80,6 @@ public class CustomEntityGhast extends CustomEntityFlying {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntityGhast);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntityGhastHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntityGhastHelper.setAbleToMove(this);" + "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntityGhastHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -102,12 +94,4 @@ public class CustomEntityGhast extends CustomEntityFlying {
 					customentity);
 	}
 
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

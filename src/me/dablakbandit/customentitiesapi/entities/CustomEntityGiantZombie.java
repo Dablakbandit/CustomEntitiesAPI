@@ -81,15 +81,6 @@ public class CustomEntityGiantZombie extends CustomEntityMonster {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntityGiantZombie);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntityGiantZombieHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntityGiantZombieHelper.setAbleToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntityGiantZombieHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -104,12 +95,4 @@ public class CustomEntityGiantZombie extends CustomEntityMonster {
 					53, customentity);
 	}
 
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

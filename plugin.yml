@@ -1,7 +1,7 @@
 name: CustomEntitiesAPI
 main: me.dablakbandit.customentitiesapi.CustomEntitiesAPI
 author: Dablakbandit
-version: 1.5
+version: 1.6
 commands:
   customentitiesapi:
     permission: customentitiesapi.test

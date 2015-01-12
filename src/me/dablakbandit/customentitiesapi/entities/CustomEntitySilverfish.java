@@ -81,15 +81,6 @@ public class CustomEntitySilverfish extends CustomEntityMonster {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntitySilverfish);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntitySilverfishHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntitySilverfishHelper.setAbleToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntitySilverfishHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -104,12 +95,4 @@ public class CustomEntitySilverfish extends CustomEntityMonster {
 					60, customentity);
 	}
 
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

@@ -8,6 +8,7 @@ import me.dablakbandit.customentitiesapi.NMSUtils;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 
 import ja.ClassPool;
 import ja.CtClass;
@@ -92,8 +93,8 @@ public abstract class CustomEntity {
 					float.class, float.class).invoke(null, o, customentity,
 					location.getX(), location.getY(), location.getZ(),
 					location.getYaw(), location.getPitch());
-			o.getClass().getMethod("addEntity", NMSUtils.getNMSClass("Entity"))
-					.invoke(o, newentity);
+			o.getClass().getMethod("addEntity", NMSUtils.getNMSClass("Entity"), CreatureSpawnEvent.SpawnReason.class)
+					.invoke(o, newentity, CreatureSpawnEvent.SpawnReason.CUSTOM);
 			entity = newentity;
 		} catch (Exception e) {
 			e.printStackTrace();

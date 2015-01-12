@@ -111,4 +111,30 @@ public class CustomEntityCreeper extends CustomEntityMonster {
 			e.printStackTrace();
 		}
 	}
+	
+	public void newGoalSelectorPathfinderGoalSwellDefault(){
+		try {
+			helper.getMethod("newGoalSelectorPathfinderGoalSwell",
+					Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newGoalSelectorPathfinderGoalAvoidPlayerDefault(){
+		newGoalSelectorPathfinderGoalAvoidPlayer(EntityName.ENTITYOCELOT, 6.0F, 1.0D, 1.2D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalMeleeAttackDefault(){
+		newGoalSelectorPathfinderGoalMeleeAttack(1.0D, false);
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(0.8D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 8.0F);
+	}
+	
 }

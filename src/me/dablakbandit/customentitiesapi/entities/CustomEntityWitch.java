@@ -6,6 +6,7 @@ import ja.CtField;
 import ja.CtNewMethod;
 import me.dablakbandit.customentitiesapi.CustomEntitiesAPI;
 import me.dablakbandit.customentitiesapi.NMSUtils;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
@@ -110,4 +111,42 @@ public class CustomEntityWitch extends CustomEntityMonster {
 			e.printStackTrace();
 		}
 	}
+	
+	public void newGoalSelectorPathfinderGoalArrowAttackDefault() {
+		newGoalSelectorPathfinderGoalArrowAttack(1.0D, 60, 60, 10.0F);
+	}
+
+	public void newGoalSelectorPathfinderGoalArrowAttack(double d, int i,
+			float f) {
+		newGoalSelectorPathfinderGoalArrowAttack(d, i, i, f);
+	}
+
+	public void newGoalSelectorPathfinderGoalArrowAttack(double d, int i,
+			int i1, float f) {
+		try {
+			helper.getMethod("newGoalSelectorPathfinderGoalArrowAttack",
+					Object.class, double.class, int.class, int.class,
+					float.class).invoke(null, entity, d, i, i1, f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeGoalSelectorPathfinderGoalArrowAttack() {
+		try {
+			helper.getMethod("removeGoalSelectorPathfinderGoalArrowAttack",
+					Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 8.0F);
+	}
+
 }

@@ -7,9 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Commands implements CommandExecutor {
-
-	@Override
+public class Commands implements CommandExecutor{
+	
 	public boolean onCommand(CommandSender s, Command cmd, String Label,
 			String[] args) {
 		if (s instanceof Player) {

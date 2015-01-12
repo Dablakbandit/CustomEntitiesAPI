@@ -80,14 +80,6 @@ public class CustomEntitySquid extends CustomEntityWaterAnimal {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntitySquid);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntitySquidHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntitySquidHelper.setAbleToMove(this);" + "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntitySquidHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -102,12 +94,4 @@ public class CustomEntitySquid extends CustomEntityWaterAnimal {
 					customentity);
 	}
 
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

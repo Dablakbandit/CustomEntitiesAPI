@@ -80,15 +80,6 @@ public class CustomEntitySnowman extends CustomEntityGolem {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntitySnowman);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntitySnowmanHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntitySnowmanHelper.setAbleToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntitySnowmanHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -103,12 +94,4 @@ public class CustomEntitySnowman extends CustomEntityGolem {
 					customentity);
 	}
 
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

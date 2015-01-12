@@ -80,15 +80,6 @@ public class CustomEntityMagmaCube extends CustomEntitySlimeExtender {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntityMagmaCube);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntityMagmaCubeHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntityMagmaCubeHelper.setAbleToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntityMagmaCubeHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -101,14 +92,5 @@ public class CustomEntityMagmaCube extends CustomEntitySlimeExtender {
 		if (customentity != null)
 			CustomEntitiesAPI.getInstance().registerEntity("EntityMagmaCube",
 					62, customentity);
-	}
-
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

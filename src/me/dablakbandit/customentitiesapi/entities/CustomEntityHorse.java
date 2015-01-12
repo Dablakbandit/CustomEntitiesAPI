@@ -110,4 +110,45 @@ public class CustomEntityHorse extends CustomEntityAnimal {
 			e.printStackTrace();
 		}
 	}
+	
+	public void newGoalSelectorPathfinderGoalPanicDefault(){
+		newGoalSelectorPathfinderGoalPanic(1.2D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalTameDefault(){
+		newGoalSelectorPathfinderGoalTame(1.2D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalBreedDefault(){
+		newGoalSelectorPathfinderGoalBreed(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalFollowParentDefault(){
+		newGoalSelectorPathfinderGoalFollowParent(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(0.7D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 6.0F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalTame(double d){
+		try{
+			helper.getMethod("newGoalSelectorPathfinderGoalTame", Object.class, double.class).invoke(null, entity, d);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeGoalSelectorPathfinderGoalTame(){
+		try{
+			helper.getMethod("removeGoalSelectorPathfinderGoalTame", Object.class).invoke(null, entity);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 }

@@ -110,4 +110,51 @@ public class CustomEntityWolf extends CustomEntityTameableAnimal {
 			e.printStackTrace();
 		}
 	}
+	
+	public void newGoalSelectorPathfinderGoalBeg(float f){
+		try {
+			helper.getMethod("newGoalSelectorPathfinderGoalBeg",
+					Object.class, float.class).invoke(null, entity, f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeGoalSelectorPathfinderGoalBeg(){
+		try {
+			helper.getMethod("removeGoalSelectorPathfinderGoalBeg",
+					Object.class).invoke(null, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void newGoalSelectorPathfinderGoalBegDefault(){
+		newGoalSelectorPathfinderGoalBeg(8.0F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLeapAtTargetDefault(){
+		newGoalSelectorPathfinderGoalLeapAtTarget(0.4F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalMeleeAttackDefault(){
+		newGoalSelectorPathfinderGoalMeleeAttack(1.0D, true);
+	}
+	
+	public void newGoalSelectorPathfinderGoalFollowOwnerDefault(){
+		newGoalSelectorPathfinderGoalFollowOwner(1.0D, 10.0F, 2.0F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalBreedDefault(){
+		newGoalSelectorPathfinderGoalBreed(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(1.0D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 8.0F);
+	}
+	
 }

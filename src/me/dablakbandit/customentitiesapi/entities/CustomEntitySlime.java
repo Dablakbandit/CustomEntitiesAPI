@@ -80,14 +80,6 @@ public class CustomEntitySlime extends CustomEntityInsentient {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntitySlime);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntitySlimeHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntitySlimeHelper.setAbleToMove(this);" + "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntitySlimeHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -100,14 +92,5 @@ public class CustomEntitySlime extends CustomEntityInsentient {
 		if (customentity != null)
 			CustomEntitiesAPI.getInstance().registerEntity("EntitySlime", 55,
 					customentity);
-	}
-
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

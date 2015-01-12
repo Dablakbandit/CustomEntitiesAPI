@@ -102,7 +102,7 @@ public class CustomEntitySkeletonHelper extends CustomEntityMonsterHelper {
 	}
 
 	public static void removeGoalSelectorPathfinderGoalArrowAttack(
-			Object creature) {
-		removeGoalSelectorPathFinderGoal(creature, "PathfinderGoalArrowAttack");
+			Object skeleton) {
+		removeGoalSelectorPathFinderGoal(skeleton, "PathfinderGoalArrowAttack");
 	}
 }

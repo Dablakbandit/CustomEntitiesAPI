@@ -102,13 +102,4 @@ public class CustomEntityPigZombie extends CustomEntityZombieExtender {
 			CustomEntitiesAPI.getInstance().registerEntity("EntityPigZombie",
 					57, customentity);
 	}
-
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

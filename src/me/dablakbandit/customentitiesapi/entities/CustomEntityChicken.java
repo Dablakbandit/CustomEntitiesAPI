@@ -6,6 +6,7 @@ import ja.CtField;
 import ja.CtNewMethod;
 import me.dablakbandit.customentitiesapi.CustomEntitiesAPI;
 import me.dablakbandit.customentitiesapi.NMSUtils;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
@@ -89,6 +90,9 @@ public class CustomEntityChicken extends CustomEntityAnimal {
 				methods.add("public void setAbleToMove(double d){"
 						+ "CustomEntityChickenHelper.setAbleToMove(this, d);"
 						+ "}");
+				methods.add("public EntityAgeable createChild(EntityAgeable entityageable){"
+						+ "return (EntityAgeable)CustomEntityChickenHelper.createEntity(this.world, this.getClass(), getLocationX(), getLocationY(), getLocationZ(), getLocationYaw(), getLocationPitch());"
+						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -110,5 +114,29 @@ public class CustomEntityChicken extends CustomEntityAnimal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void newGoalSelectorPathfinderGoalPanicDefault(){
+		newGoalSelectorPathfinderGoalPanic(1.4D);
+	}
+
+	public void newGoalSelectorPathfinderGoalBreedDefault(){
+		newGoalSelectorPathfinderGoalBreed(1.0D);
+	}
+
+	public void newGoalSelectorPathfinderGoalTemptDefault(){
+		newGoalSelectorPathfinderGoalTempt(1.0D, "WHEAT", false);
+	}
+
+	public void newGoalSelectorPathfinderGoalFollowParentDefault(){
+		newGoalSelectorPathfinderGoalFollowParent(1.1D);
+	}
+
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(1.0D);
+	}
+
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 6.0F);
 	}
 }

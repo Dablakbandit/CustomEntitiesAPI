@@ -80,15 +80,6 @@ public class CustomEntityEnderman extends CustomEntityMonster {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntityEnderman);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntityEndermanHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntityEndermanHelper.setAbleToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntityEndermanHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -101,14 +92,5 @@ public class CustomEntityEnderman extends CustomEntityMonster {
 		if (customentity != null)
 			CustomEntitiesAPI.getInstance().registerEntity("EntityEnderman",
 					58, customentity);
-	}
-
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

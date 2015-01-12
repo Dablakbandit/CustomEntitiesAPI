@@ -332,4 +332,73 @@ public class CustomEntityInsentientHelper extends CustomEntityLivingHelper {
 			Object insentient) {
 		removeGoalSelectorPathFinderGoal(insentient, "PathfinderGoalInteract");
 	}
+	
+	public static void newGoalSelectorPathfinderGoalLeapAtTarget(Object insentient, float f) {
+		try {
+			Class<?> entityinsentient = getNMSClass("EntityInsentient");
+			Class<?> pathfindergoal = getNMSClass("PathfinderGoal");
+
+			Object goalselector = getGoalSelector(insentient);
+
+			Class<?> pathfindergoalleapattarget = getNMSClass("PathfinderGoalLeapAtTarget");
+			Object o = pathfindergoalleapattarget.getConstructor(entityinsentient, float.class).newInstance(
+					entityinsentient.cast(insentient), f);
+
+			goalselector.getClass().getMethod("a", int.class, pathfindergoal)
+					.invoke(goalselector, 7, o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void removeGoalSelectorPathfinderGoalLeapAtTarget(
+			Object insentient) {
+		removeGoalSelectorPathFinderGoal(insentient, "PathfinderGoalLeapAtTarget");
+	}
+	
+	public static void newGoalSelectorPathfinderGoalOcelotAttack(Object insentient) {
+		try {
+			Class<?> entityinsentient = getNMSClass("EntityInsentient");
+			Class<?> pathfindergoal = getNMSClass("PathfinderGoal");
+
+			Object goalselector = getGoalSelector(insentient);
+
+			Class<?> pathfindergoalocelotattack = getNMSClass("PathfinderGoalOcelotAttack");
+			Object o = pathfindergoalocelotattack.getConstructor(entityinsentient).newInstance(
+					entityinsentient.cast(insentient));
+
+			goalselector.getClass().getMethod("a", int.class, pathfindergoal)
+					.invoke(goalselector, 8, o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void removeGoalSelectorPathfinderGoalOcelotAttack(
+			Object insentient) {
+		removeGoalSelectorPathFinderGoal(insentient, "PathfinderGoalOcelotAttack");
+	}
+	
+	public static void newGoalSelectorPathfinderGoalPassengerCarrotStick(Object insentient, float f) {
+		try {
+			Class<?> entityinsentient = getNMSClass("EntityInsentient");
+			Class<?> pathfindergoal = getNMSClass("PathfinderGoal");
+
+			Object goalselector = getGoalSelector(insentient);
+
+			Class<?> pathfindergoalpassengercarrotstick = getNMSClass("PathfinderGoalPassengerCarrotStick");
+			Object o = pathfindergoalpassengercarrotstick.getConstructor(entityinsentient, float.class).newInstance(
+					entityinsentient.cast(insentient), f);
+
+			goalselector.getClass().getMethod("a", int.class, pathfindergoal)
+					.invoke(goalselector, 7, o);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void removeGoalSelectorPathfinderGoalPassengerCarrotStick(
+			Object insentient) {
+		removeGoalSelectorPathFinderGoal(insentient, "PathfinderGoalPassengerCarrotStick");
+	}
 }

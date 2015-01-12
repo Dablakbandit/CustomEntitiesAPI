@@ -81,15 +81,6 @@ public class CustomEntityEnderDragon extends CustomEntityInsentient {
 				}
 				fields.clear();
 				ctClass.setSuperclass(EntityEnderDragon);
-				methods.add("public void setUnableToMove(){"
-						+ "CustomEntityEnderDragonHelper.setUnableToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(){"
-						+ "CustomEntityEnderDragonHelper.setAbleToMove(this);"
-						+ "}");
-				methods.add("public void setAbleToMove(double d){"
-						+ "CustomEntityEnderDragonHelper.setAbleToMove(this, d);"
-						+ "}");
 				for (String m : methods) {
 					ctClass.addMethod(CtNewMethod.make(m, ctClass));
 				}
@@ -102,14 +93,5 @@ public class CustomEntityEnderDragon extends CustomEntityInsentient {
 		if (customentity != null)
 			CustomEntitiesAPI.getInstance().registerEntity("EntityEnderDragon",
 					63, customentity);
-	}
-
-	public void setGoalSelectorDefaultPathfinderGoals() {
-		try {
-			helper.getMethod("setGoalSelectorDefaultPathfinderGoals",
-					Object.class).invoke(null, entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

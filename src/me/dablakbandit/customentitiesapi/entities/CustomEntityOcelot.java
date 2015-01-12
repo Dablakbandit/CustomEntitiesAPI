@@ -111,4 +111,45 @@ public class CustomEntityOcelot extends CustomEntityTameableAnimal {
 			e.printStackTrace();
 		}
 	}
+	
+	public void newGoalSelectorPathfinderGoalTempDefault(){
+		newGoalSelectorPathfinderGoalTempt(0.6D, "RAW_FISH", true);
+	}
+	
+	public void newGoalSelectorPathfinderGoalAvoidPlayerDefault(){
+		newGoalSelectorPathfinderGoalAvoidPlayer(EntityName.ENTITYHUMAN, 16.0F, 0.8D, 1.33D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalFollowOwnerDefault(){
+		newGoalSelectorPathfinderGoalFollowOwner(1.0D, 10.0F, 5.0F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalJumpOnBlockDefault(){
+		newGoalSelectorPathfinderGoalJumpOnBlock(1.33D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLeapAtTargetDefault(){
+		newGoalSelectorPathfinderGoalLeapAtTarget(0.3F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalBreedDefault(){
+		newGoalSelectorPathfinderGoalBreed(0.8D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalRandomStrollDefault(){
+		newGoalSelectorPathfinderGoalRandomStroll(0.8D);
+	}
+	
+	public void newGoalSelectorPathfinderGoalLookAtPlayerDefault(){
+		newGoalSelectorPathfinderGoalLookAtPlayer(EntityName.ENTITYHUMAN, 10.0F);
+	}
+	
+	public void newGoalSelectorPathfinderGoalJumpOnBlock(double d){
+		try{
+			helper.getMethod("newGoalSelectorPathfinderGoalJumpOnBlock", Object.class, double.class).invoke(null, entity, d);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 }
